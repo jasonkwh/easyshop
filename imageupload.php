@@ -8,6 +8,7 @@ $target_file = $target_dir . "mo_" . $_SESSION['mouserid'] . "_" . time() . "." 
 $output="";
 $query="";
 $imagetype = $_REQUEST['imagetype'];
+$bgimgid=$_SESSION['mopageid'];
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -36,19 +37,19 @@ if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg
 }
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-    header('Location: ' . $_SESSION['mocurrenturl'] . '?adminbgupload=0&msg=' . $output);
+    header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=0&msg=' . $output);
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         if($imagetype=="homepagebg") {
             $query = "insert into mohomepagebg (FileName,FileUrl,CreatedDate) VALUES ('" . basename( $_FILES["fileToUpload"]["name"]) . "','/" . $target_file . "',NOW())";
         } else if($imagetype=="merchantbg") {
-            $query = "update momerchantbg set selected=0 where MerchantId=" . $_SESSION['mouserid'];
+            $query = "update momerchantbg set selected=0 where MerchantId=" . $bgimgid;
             $mysqli->query($query);
-            $query = "insert into momerchantbg (MerchantId,FileName,FileUrl,CreatedDate,selected) VALUES (" . $_SESSION['mouserid'] . ",'" . basename( $_FILES["fileToUpload"]["name"]) . "','/" . $target_file . "',NOW(),1)";
+            $query = "insert into momerchantbg (MerchantId,FileName,FileUrl,CreatedDate,selected) VALUES (" . $bgimgid. ",'" . basename( $_FILES["fileToUpload"]["name"]) . "','/" . $target_file . "',NOW(),1)";
         }
         $mysqli->query($query);
-        header('Location: ' . $_SESSION['mocurrenturl'] . $_SERVEr['HTTP_REFERER'] . $mark . '?adminbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
+        header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
     }
 }
 ?>

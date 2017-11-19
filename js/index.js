@@ -11,12 +11,14 @@
       if ($('#profilemenu').length === 1) {
         $('#profiledropdownmenularge').css("left", $('#profilemenu').position().left - 25);
       }
-      $('#merchantcontainer').css("top", 450);
+      $('#merchantcontainer').css("top", 275);
+      $('#merchantlogo').removeClass('justify-content-center');
     } else {
       $('#photogallery').hide();
       $('#categorycarddisplay').hide();
       $('#largescreen').hide();
-      $('#merchantcontainer').css("top", 300);
+      $('#merchantcontainer').css("top", 200);
+      $('#merchantlogo').addClass('justify-content-center');
     }
     $('#navbackground').css("height", $('.nav-pills').offset().top + $('.nav-pills').height() + 4.5);
     $('#photogallery').css("margin-top", -($('#photogallery').offset().top - $('#navbackground').height()));

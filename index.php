@@ -1,6 +1,7 @@
 <?php
 require_once('userstatus.php');
 $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",'?');
+$_SESSION['mopageid'] = $_REQUEST['id'];
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hant">
@@ -185,7 +186,7 @@ $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http")
 <div id="merchantcontainer" style="display:none"></div>
 <div class="container">
     <div class="row">
-        <div class="card col-md-12">
+        <div class="col-12 col-md-6">
             <div class="card-header">
                 title
             </div>
@@ -196,12 +197,8 @@ $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http")
                 </blockquote>
             </div>
         </div>
-    </div>
 
-    <br>
-
-    <div class="row">
-        <div class="card col-md-12">
+        <div class="col-12 col-md-6">
             <div class="card-header">
                 title
             </div>
@@ -212,12 +209,8 @@ $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http")
                 </blockquote>
             </div>
         </div>
-    </div>
 
-    <br>
-
-    <div class="row">
-        <div class="card col-md-12">
+        <div class="col-md-12">
             <div class="card-header">
                 title
             </div>
@@ -228,12 +221,8 @@ $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http")
                 </blockquote>
             </div>
         </div>
-    </div>
 
-    <br>
-
-    <div class="row">
-        <div class="card col-md-12">
+        <div class="col-md-12">
             <div class="card-header">
                 title
             </div>

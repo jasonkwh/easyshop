@@ -1,6 +1,7 @@
 <?php
 require_once('userstatus.php');
 $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",'?');
+$_SESSION['mopageid'] = $_REQUEST['id'];
 $permissiontoedit = 0;
 if($_SESSION['mousertype']==1) {
     $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
@@ -87,18 +88,20 @@ if($_SESSION['mousertype']==1) {
 </head>
 <body style="height:100%;<?php
 $selecteditem = 0;
-$query = "select bg.Id,bg.FileName,bg.FileUrl,bg.selected from momerchantbg bg inner join momerchants mer on bg.MerchantId=mer.Id where bg.TrashedDate is null and mer.Id=" . $_REQUEST['id'];
+$query = "select bg.Id,bg.FileName,bg.FileUrl,bg.selected,mer.LogoUrl from momerchantbg bg inner join momerchants mer on bg.MerchantId=mer.Id where bg.TrashedDate is null and mer.Id=" . $_REQUEST['id'];
 $result = $mysqli->query($query);
 $imgmanoutput = "";
+$logourl = "";
 if(($result) && ($result->num_rows!==0)) {
     while($row = $result->fetch_assoc()) {
         if($row['selected']==1) {
             $selecteditem = $row['Id'];
             $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" title="' . $row['FileName'] . '"></a></div>';
-            echo "background:linear-gradient(0deg,rgba(255,255,255,1),rgba(255,255,255,0.7),rgba(255,255,255,0.3),rgba(255,255,255,0),rgba(255,255,255,0)),url(" . $row['FileUrl'] . ");";
+            echo "background:linear-gradient(0deg,rgba(255,255,255,1),rgba(255,255,255,0.8),rgba(255,255,255,0.6),rgba(255,255,255,0.2),rgba(255,255,255,0.2)),url(" . $row['FileUrl'] . ");";
         } else {
             $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" title="' . $row['FileName'] . '"></a></div>';
         }
+        $logourl = $row['LogoUrl'];
     }
     echo "background-size:cover;background-attachment:fixed;";
 }
@@ -191,6 +194,11 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="merchantcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
+    <div id="merchantlogo" class="row">
+        <div class="col-6 col-md-3">
+            <img src="<?php echo $logourl; ?>" style="width:100%;margin-bottom:20px">
+        </div>
+    </div>
     <div class="row">
         <div class="card col-md-12">
             <div class="card-header">
