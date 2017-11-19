@@ -186,15 +186,19 @@ $_SESSION['mopageid'] = $_REQUEST['id'];
 <div id="merchantcontainer" style="display:none"></div>
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-6">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+        <div class="col-12 col-md-6" style="margin-bottom:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+                <div class="row">
+                    <?php
+                    $query = "select Id,Name,LogoUrl from momerchants order by Name asc";
+                    $result = $mysqli->query($query);
+                    if(($result) && ($result->num_rows!==0)) {
+                        while($row=$result->fetch_assoc()) {
+                            echo '<div class="col-4"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
+                        }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
 
