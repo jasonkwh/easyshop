@@ -200,14 +200,38 @@ if(($result) && ($result->num_rows!==0)) {
 </div>
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
-<div id="merchantcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-
-
+<div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;background-color:#fff">
+    <div class="row">
+        <div class="col-md-4" style="padding:0px">
+            <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
+        </div>
+        <div class="col-md-2" style="padding:0px">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
+                </div>
+                <div class="col-md-12">
+                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
+                </div>
+                <div class="col-md-12">
+                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
+                </div>
+                <div class="col-md-12">
+                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Test Product</h4>
+            <p>This is the description</p>
+        </div>
+    </div>
     <br>
     <footer>
         <p class="text-center">test footer</p>
     </footer>
 </div>
+<div id="merchantcontainer" style="display:none"></div>
 <div id="navbackground">
 
 </div>

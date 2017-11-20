@@ -193,6 +193,7 @@ if(($result) && ($result->num_rows!==0)) {
 </div>
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
+<div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
     <div id="merchantlogo" class="row">
         <div class="col-6 col-md-3">

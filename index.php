@@ -183,6 +183,7 @@ $_SESSION['mopageid'] = $_REQUEST['id'];
     </div>
     <?php if($_SESSION['mousertype']==2) { ?><button id="carouselsettingsbtn" type="button" class="btn btn-success rounded-circle" style="width:70px;height:70px;margin-top:-425px;z-index:100" onclick="openbgimgmanager()"><i class="fa fa-wrench" aria-hidden="true" style="font-size:25px"></i></button><?php } ?>
 </div>
+<div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" style="display:none"></div>
 <div class="container">
     <div class="row">
