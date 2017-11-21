@@ -20,6 +20,10 @@
       $('#merchantcontainer').css("top", 200);
       $('#merchantlogo').addClass('justify-content-center');
     }
+    $('#productcontainer').css("top", 150);
+    $('.moproducts').css('height', $('.moproducts').outerWidth());
+    $('.mosubproducts').css('height', $('.moproducts').outerWidth() / 3);
+    $('.mosubproducts').parent().css('width', $('.mosubproducts').height());
     $('#navbackground').css("height", $('.nav-pills').offset().top + $('.nav-pills').height() + 4.5);
     $('#photogallery').css("margin-top", -($('#photogallery').offset().top - $('#navbackground').height()));
     if (getParameterByName('login') !== null) {

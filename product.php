@@ -200,25 +200,14 @@ if(($result) && ($result->num_rows!==0)) {
 </div>
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
-<div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;background-color:#fff">
+<div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;background-color:#fff;border-radius:5px">
     <div class="row">
-        <div class="col-md-4" style="padding:0px">
-            <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
-        </div>
-        <div class="col-md-2" style="padding:0px">
+        <div class="col-md-4 moproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px"></div>
+        <div class="col-md-2">
             <div class="row">
-                <div class="col-md-12">
-                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
-                </div>
-                <div class="col-md-12">
-                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
-                </div>
-                <div class="col-md-12">
-                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
-                </div>
-                <div class="col-md-12">
-                    <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==" style="width:100%">
-                </div>
+                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;border-bottom-right-radius:5px;"></div>
             </div>
         </div>
         <div class="col-md-6">
