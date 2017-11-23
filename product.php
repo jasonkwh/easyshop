@@ -176,7 +176,7 @@ if(($result) && ($result->num_rows!==0)) {
                 <div class="col-md-8">
                     <ul class="nav nav-pills justify-content-center text-success" style="margin-bottom:15px">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;首頁</a>
+                            <a class="nav-link active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;&nbsp;首頁</a>
                         </li>
                         <?php echo $pageshtml;
                         if($_SESSION['mousertype']==2) { ?>
@@ -200,19 +200,45 @@ if(($result) && ($result->num_rows!==0)) {
 </div>
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
-<div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;background-color:#fff;border-radius:5px">
-    <div class="row">
-        <div class="col-md-4 moproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px"></div>
+<div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
+    <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
+        <div class="col-md-4 moproducts grow" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
         <div class="col-md-2">
             <div class="row">
-                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;border-bottom-right-radius:5px;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="padding-top:40px;margin-left:-20px">
+            <div class="row">
+
+            </div>
             <h4>Test Product</h4>
             <p>This is the description</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;立即購買</button>
+                    <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;加入購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+                <ul class="nav nav-pills text-success" style="margin-bottom:15px">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;產品詳細</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;&nbsp;用戶評價</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <br>

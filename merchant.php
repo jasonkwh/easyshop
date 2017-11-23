@@ -169,7 +169,7 @@ if(($result) && ($result->num_rows!==0)) {
                 <div class="col-md-8">
                     <ul class="nav nav-pills justify-content-center text-success" style="margin-bottom:15px">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;首頁</a>
+                            <a class="nav-link active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;&nbsp;首頁</a>
                         </li>
                         <?php echo $pageshtml;
                         if($_SESSION['mousertype']==2) { ?>
