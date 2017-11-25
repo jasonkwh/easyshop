@@ -210,17 +210,27 @@ if(($result) && ($result->num_rows!==0)) {
                 <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
             </div>
         </div>
-        <div class="col-md-6" style="padding-top:40px;margin-left:-20px">
+        <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
             <div class="row">
-
+                <h4><span style="font-size:16px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;Test Product</h4>
             </div>
-            <h4>Test Product</h4>
-            <p>This is the description</p>
             <div class="row">
-                <div class="col-md-6">
-                    <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;立即購買</button>
-                    <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;加入購物車</button>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div class="row">
+                <div class="col-1 align-self-center" style="padding:0;text-align:center">
+                <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="if(parseInt($('#moquantities').val())>0) { $('#moquantities').val(parseInt($('#moquantities').val())-1); }"><i class="fa fa-minus" aria-hidden="true"></i></button>
                 </div>
+                <div class="col-2 align-self-center" style="padding:0;text-align:center">
+                    <div class="input-group"><input id="moquantities" type="text" placeholder="數量" class="form-control input-login" value="1"><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>
+                </div>
+                <div class="col-1 align-self-center" style="padding:0;text-align:center">
+                    <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="$('#moquantities').val(parseInt($('#moquantities').val())+1);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                </div>
+                </div>
+            <div class="row" style="margin-top:10px">
+                <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav" style="margin-right:10px">立即購買</button>
+                <button type="button" class="loginbtn btn btn-lg btn-success btn-nav"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;加入購物車</button>
             </div>
         </div>
     </div>
@@ -232,12 +242,19 @@ if(($result) && ($result->num_rows!==0)) {
         </div>
         <div class="col-md-9">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
-                <ul class="nav nav-pills text-success" style="margin-bottom:15px">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;產品詳細</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;&nbsp;用戶評價</a></li>
-                </ul>
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;產品詳細</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;&nbsp;用戶評價</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
             </div>
         </div>
     </div>
