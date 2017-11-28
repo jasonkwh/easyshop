@@ -4,11 +4,15 @@ $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http")
 $_SESSION['mopageid'] = $_REQUEST['id'];
 $permissiontoedit = 0;
 $merchantid = 0;
-$query = "select MerchantId from moproducts where Id=" . $_REQUEST['id'];
+$query = "select * from moproducts where Id=" . $_REQUEST['id'];
 $result = $mysqli->query($query);
+$productname = "商品名稱";
+$descriptions = "此處為商品介紹 (限300英文字)";
 if(($result) && ($result->num_rows!==0)) {
     $row=$result->fetch_assoc();
     $merchantid = $row['MerchantId'];
+    $productname = $row['Name'];
+    $descriptions = $row['Descriptions'];
 }
 if($_SESSION['mousertype']==1) {
     $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
@@ -202,17 +206,27 @@ if(($result) && ($result->num_rows!==0)) {
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
-        <div class="col-md-4 moproducts grow" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
+        <?php
+            $imageurls = array();
+            $query = "select * from moproductimgs where TrashedDate is null and ProductId=" . $_REQUEST['id'] . " order by ImgOrder asc";
+            $result = $mysqli->query($query);
+            if(($result) && ($result->num_rows!==0)) {
+                while($row = $result->fetch_assoc()) {
+                    array_push($imageurls,$row['FileUrl']);
+                }
+            }
+            ?>
+        <div class="col-md-4 moproducts grow" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
         <div class="col-md-2">
             <div class="row">
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4Mi8xMjYvb3JpZ2luYWwvc3VzaGkuanBlZw==);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
             </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
             <div class="row">
-                <h4><span style="font-size:16px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;Test Product</h4>
+                <h4><span style="font-size:16px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
             <div class="row">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -229,8 +243,8 @@ if(($result) && ($result->num_rows!==0)) {
                 </div>
                 </div>
             <div class="row" style="margin-top:10px">
-                <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav" style="margin-right:10px">立即購買</button>
-                <button type="button" class="loginbtn btn btn-lg btn-success btn-nav"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;加入購物車</button>
+                <button type="button" class="loginbtn btn btn-lg btn-outline-success btn-nav" onclick="<?php if($loggedin==1) { } else { echo "logindialog()"; } ?>" style="margin-right:10px">立即購買</button>
+                <button type="button" class="loginbtn btn btn-lg btn-success btn-nav" onclick="<?php if($loggedin==1) { } else { echo "logindialog()"; } ?>"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;加入購物車</button>
             </div>
         </div>
     </div>

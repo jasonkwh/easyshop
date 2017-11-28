@@ -85,7 +85,7 @@ $ ->
     return
   return
 
-logindialog = ->
+@logindialog = ->
   username = ''
   password = ''
   checked = ''
