@@ -95,6 +95,36 @@ if($_SESSION['mousertype']==1) {
                 }
             });
         }
+
+        function goBack() {
+            <?php if($permissiontoedit==1) { ?>
+            $.confirm({
+                icon: 'fa fa-warning',
+                title: '返回上一頁',
+                content: '離開頁面將會丟失所有未保存的內容，確定離開?',
+                typeAnimated: true,
+                closeIcon: true,
+                buttons: {
+                    somethingElse: {
+                        text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定',
+                        btnClass: 'btn btn-danger btn-nav btn-error',
+                        keys: ['enter'],
+                        action: function(){
+                            <?php } ?>
+                            history.back(1);
+                            <?php if($permissiontoedit==1) { ?>
+                        }
+                    },
+                    closeBtn: {
+                        text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;取消',
+                        btnClass: 'btn btn-outline-danger btn-nav btn-error btn-error-cancel',
+                        action: function(){
+                        }
+                    }
+                }
+            });
+            <?php } ?>
+        }
     </script>
 </head>
 <body style="height:100%;<?php
@@ -205,6 +235,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
+    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;保存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
         <?php
             $imageurls = array();
@@ -216,12 +247,12 @@ if(($result) && ($result->num_rows!==0)) {
                 }
             }
             ?>
-        <div class="col-md-4 moproducts grow" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
+        <div class="col-md-4 moproducts grow" data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
         <div class="col-md-2">
             <div class="row">
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
-                <div class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
             </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
@@ -229,7 +260,7 @@ if(($result) && ($result->num_rows!==0)) {
                 <h4><span style="font-size:16px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
             <div class="row">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <?php if($permissiontoedit==1) { echo "<textarea style='height:140px;width:95%;border:1px solid #d2d2d2;resize:none'>" . $descriptions . "</textarea></div><div class='row'><p style='font-size:12px'>剩餘 x 字</p>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
             </div>
             <div class="row">
                 <div class="col-1 align-self-center" style="padding:0;text-align:center">
@@ -311,11 +342,36 @@ if(($result) && ($result->num_rows!==0)) {
                 <div class="modal-body">
                     <div class="row text-center text-lg-left">
                         <div class="col-lg-4 col-md-4 col-xs-6">
-                            <a href="#" class="d-block mb-4 h-100" onclick="$('#picUploadModal').modal()">
+                            <a href="#" class="d-block mb-4 h-100" onclick="$('#imagetype').val('merchantbg');$('#picUploadModal').modal();">
                                 <img id="addpicbtn" class="img-fluid img-thumbnail mobgimg" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" title="上傳圖片">
                             </a>
                         </div>
                         <?php echo $imgmanoutput; ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success btn-nav" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="picManageModal2" tabindex="-1" role="dialog" aria-labelledby="picManageModal2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title" style="font-size:18px"><i class="fa fa-camera" aria-hidden="true" style="color:#28a745"></i>&nbsp;商品圖片管理</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center text-lg-left">
+                        <div class="col-lg-4 col-md-4 col-xs-6">
+                            <a href="#" class="d-block mb-4 h-100" onclick="$('#imagetype').val('productbg');$('#picUploadModal').modal()">
+                                <img id="addpicbtn" class="img-fluid img-thumbnail mobgimg" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" title="上傳圖片">
+                            </a>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -337,7 +393,8 @@ if(($result) && ($result->num_rows!==0)) {
                     <form id="adminbgimageform" action="imageupload.php" method="post" enctype="multipart/form-data" onsubmit="waitingdialog()">
                         請選擇需要上傳的文件：
                         <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="hidden" name="imagetype" value="merchantbg">
+                        <input type="hidden" id="imagetype" name="imagetype" value="merchantbg">
+                        <input type="hidden" id="productid" name="productid" value="<?php echo $_REQUEST['id']; ?>">
                     </form>
                 </div>
                 <div class="modal-footer">
