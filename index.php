@@ -2,6 +2,10 @@
 require_once('userstatus.php');
 $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",'?');
 $_SESSION['mopageid'] = $_REQUEST['id'];
+$permissiontoedit = 0;
+if($_SESSION['mousertype']==1) {
+    $permissiontoedit = 1;
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hant">
@@ -78,6 +82,10 @@ $_SESSION['mopageid'] = $_REQUEST['id'];
             <div class="dropdown">
             <button id="profilemenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="loginbtn btn btn-outline-success btn-nav float-right dropdown-toggle" style="margin-right:-45px"><i class='fa fa-user' aria-hidden='true'></i>&nbsp;<?php echo $_SESSION['mousername']; ?></button>
             <div id="profiledropdownmenularge" class="dropdown-menu" aria-labelledby="profilemenu" style="position:absolute;top:40px!important">
+                <?php if($permissiontoedit==1) { ?>
+                    <a class="dropdown-item" href="#"><i class="fa fa-plus-square" aria-hidden="true" style="width:15px"></i>&nbsp;添加商品</a>
+                    <div class="dropdown-divider"></div>
+                <?php } ?>
                 <a class="dropdown-item" href="#"><i class="fa fa-cog" aria-hidden="true" style="width:15px"></i>&nbsp;個人設定</a>
                 <a class="logoutbtn dropdown-item" href="#"><i class="fa fa-sign-out" aria-hidden="true" style="width:15px"></i>&nbsp;登出</a>
             </div>
@@ -97,6 +105,10 @@ $_SESSION['mopageid'] = $_REQUEST['id'];
                 <div class="dropdown">
                     <button id="profilemenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="loginbtn btn btn-outline-success btn-nav float-right dropdown-toggle"><i class='fa fa-user' aria-hidden='true'></i></button>
                     <div id="profiledropdownmenusmall" class="dropdown-menu" aria-labelledby="profilemenu" style="position:absolute;top:40px!important">
+                        <?php if($permissiontoedit==1) { ?>
+                            <a class="dropdown-item" href="#"><i class="fa fa-plus-square" aria-hidden="true" style="width:15px"></i>&nbsp;添加商品</a>
+                            <div class="dropdown-divider"></div>
+                        <?php } ?>
                         <a class="dropdown-item" href="#"><i class="fa fa-cog" aria-hidden="true" style="width:15px"></i>&nbsp;個人設定</a>
                         <a class="logoutbtn dropdown-item" href="#"><i class="fa fa-sign-out" aria-hidden="true" style="width:15px"></i>&nbsp;登出</a>
                     </div>
