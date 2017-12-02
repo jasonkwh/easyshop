@@ -14,6 +14,7 @@ if(isset($_POST['logout'])) {
         unset($_SESSION['mouserid']);
         unset($_SESSION['mousertype']);
         unset($_SESSION['mocurrenturl']);
+        unset($_SESSION['momerchantid']);
         $output = "success";
     }
 }

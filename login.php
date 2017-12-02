@@ -20,6 +20,7 @@ if(($result) && ($result->num_rows !== 0)) {
     $_SESSION['mousername'] = $row['LastName'] . " " . $row['FirstName'];
     $_SESSION['mouserid'] = $row['Id'];
     $_SESSION['mousertype'] = $row['UserType'];
+    $_SESSION['momerchantid'] = $row['MerchantId'];
     $query = "UPDATE mousers SET SessionId='" . session_id() . "' WHERE Id=" . $row['Id'];
     $mysqli->query($query);
     $output = "success";

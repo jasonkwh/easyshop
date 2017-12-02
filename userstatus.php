@@ -19,5 +19,7 @@ if(isset($_SESSION['mouserid'])) {
         unset($_SESSION['mousername']);
         unset($_SESSION['mouserid']);
         unset($_SESSION['mousertype']);
+        unset($_SESSION['mocurrenturl']);
+        unset($_SESSION['momerchantid']);
     }
 }
