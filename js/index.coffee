@@ -99,6 +99,11 @@ $ ->
   inputaction = 'if (parseInt(localStorage.getItem(\'morememberme\')) == 1) { localStorage.setItem(\'mousername\', $(\'#username\').val()); localStorage.setItem(\'mopassword\', $(\'#password\').val()); localStorage.setItem(\'morememberme\', 1); }'
   changestatus = 'if (isNaN(parseInt(localStorage.getItem(\'morememberme\')))) { localStorage.setItem(\'morememberme\',0); } if (parseInt(localStorage.getItem(\'morememberme\')) == 0) { localStorage.setItem(\'mousername\', $(\'#username\').val()); localStorage.setItem(\'mopassword\', $(\'#password\').val()); localStorage.setItem(\'morememberme\', 1); } else { localStorage.removeItem(\'mousername\'); localStorage.removeItem(\'mopassword\'); localStorage.setItem(\'morememberme\', 0); }';
   content = '<div class="input-group" style="margin-bottom:10px"><input id="username" type="text" placeholder="用戶名或電子郵件地址" class="form-control input-login" aria-label="用戶名或電子郵件地址" value="' + username + '" onchange="' + inputaction + '" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="password" type="password" placeholder="密碼" class="form-control input-login" aria-label="密碼" value="' + password + '" onchange="' + inputaction + '" /><span class="input-group-addon input-login-addon"><i class="fa fa-lock" aria-hidden="true"></i></span></div><div class="row" style="margin-bottom:-5px"><div class="col-6"><div style="float:left;margin-left:5px" class="form-check abc-checkbox abc-checkbox-success abc-checkbox-circle"><input class="form-check-input" id="rememberme" type="checkbox" ' + checked + ' onclick="' + changestatus + '"><label class="form-check-label" for="rememberme">記住密碼</label></div></div><div class="col-6"><a style="float:right;color:#28a745" href="#">忘記密碼？</a></div></div>'
+  setTimeout (->
+    $('.jconfirm-buttons').css 'margin-bottom', -10
+    $('.jconfirm-buttons').append '<span style="font-size:13px">想成為會員？<a href="#" style="color:#28a745">點此註冊</a></span>'
+    return
+  ), 250
   $.confirm
     theme: 'modern'
     title: 'Hello'
@@ -368,7 +373,12 @@ getParameterByName = (name, url) ->
 
 @openbgimgmanager = ->
   $('#picManageModal').modal()
-  setTimeout "$('.mobgimg').css('width',$('#addpicbtn').outerWidth()); $('.mobgimg').css('height',$('#addpicbtn').outerHeight());",250
+  setTimeout "$('.mobgimg').css('width',$('.addpicbtn').outerWidth()); $('.mobgimg').css('height',$('.addpicbtn').outerHeight());",250
+  return
+
+@openproductimgmanager = ->
+  $('#picManageModal2').modal()
+  setTimeout "$('.mobgimg').css('width',$('.addpicbtn').outerWidth()); $('.mobgimg').css('height',$('.addpicbtn').outerHeight());",250
   return
 
 @loadindexbgimg = ->

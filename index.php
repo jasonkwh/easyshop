@@ -145,7 +145,7 @@ if($_SESSION['mousertype']==1) {
                     $result = $mysqli->query($query);
                     if(($result) && ($result->num_rows!==0)) {
                         while($row=$result->fetch_assoc()) {
-                            echo '<div class="col-4"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
+                            echo '<div class="col-4"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
                         }
                     }
                     ?>
@@ -229,7 +229,7 @@ if($_SESSION['mousertype']==1) {
                     <div class="row text-center text-lg-left">
                         <div class="col-lg-4 col-md-4 col-xs-6">
                             <a href="#" class="d-block mb-4 h-100" onclick="$('#picUploadModal').modal()">
-                                <img id="addpicbtn" class="img-fluid img-thumbnail mobgimg" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" title="上傳圖片">
+                                <img class="img-fluid img-thumbnail mobgimg addpicbtn" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="上傳圖片">
                             </a>
                         </div>
                         <?php
@@ -237,7 +237,7 @@ if($_SESSION['mousertype']==1) {
                         $result = $mysqli->query($query);
                         if(($result) && ($result->num_rows!==0)) {
                             while($row = $result->fetch_assoc()) {
-                                echo '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a href="#" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',1,-1)" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" title="' . $row['FileName'] . '"></a></div>';
+                                echo '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a href="#" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',1,-1)" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
                             }
                         }
                         ?>

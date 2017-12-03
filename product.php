@@ -128,23 +128,31 @@ if($_SESSION['mousertype']==1) {
     </script>
 </head>
 <body style="height:100%;<?php
-$selecteditem = 0;
-$query = "select bg.Id,bg.FileName,bg.FileUrl,bg.selected,mer.LogoUrl from momerchantbg bg inner join momerchants mer on bg.MerchantId=mer.Id where bg.TrashedDate is null and mer.Id=" . $merchantid;
+$query = "select Id,FileName,FileUrl,selected from momerchantbg where TrashedDate is null and MerchantId=" . $merchantid;
 $result = $mysqli->query($query);
 $imgmanoutput = "";
-$logourl = "";
 if(($result) && ($result->num_rows!==0)) {
     while($row = $result->fetch_assoc()) {
         if($row['selected']==1) {
-            $selecteditem = $row['Id'];
-            $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $merchantid . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" title="' . $row['FileName'] . '"></a></div>';
+            $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $merchantid . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
             echo "background:linear-gradient(0deg,rgba(255,255,255,1),rgba(255,255,255,0.8),rgba(255,255,255,0.6),rgba(255,255,255,0.2),rgba(255,255,255,0.2)),url(" . $row['FileUrl'] . ");";
         } else {
-            $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $merchantid . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" title="' . $row['FileName'] . '"></a></div>';
+            $imgmanoutput .= '<div id="mobg_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mobgimg_' . $row['Id'] . '" href="#" onclick="selectthis($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',2,' . $merchantid . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
         }
-        $logourl = $row['LogoUrl'];
     }
     echo "background-size:cover;background-attachment:fixed;";
+}
+$query = "select Id,FileName,FileUrl,selected from moproductimgs where TrashedDate is null and ProductId=" . $_REQUEST['id'];
+$result = $mysqli->query($query);
+$imgmanoutput2 = "";
+if(($result) && ($result->num_rows!==0)) {
+    while($row = $result->fetch_assoc()) {
+        if($row['selected']==1) {
+            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashpdimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
+        } else {
+            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashpdimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
+        }
+    }
 }
 ?>">
 <div class="container">
@@ -193,12 +201,12 @@ if(($result) && ($result->num_rows!==0)) {
                 }
             }
             ?>
-        <div class="col-md-4 moproducts grow" data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px"></div>
+        <button class="col-md-4 moproducts grow" data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
             <div class="row">
-                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
-                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
-                <div data-toggle="tooltip" data-placement="bottom" title="點擊管理商品圖片" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;"></div>
+                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
+                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
+                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
             </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
@@ -289,7 +297,7 @@ if(($result) && ($result->num_rows!==0)) {
                     <div class="row text-center text-lg-left">
                         <div class="col-lg-4 col-md-4 col-xs-6">
                             <a href="#" class="d-block mb-4 h-100" onclick="$('#imagetype').val('merchantbg');$('#picUploadModal').modal();">
-                                <img id="addpicbtn" class="img-fluid img-thumbnail mobgimg" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" title="上傳圖片">
+                                <img class="img-fluid img-thumbnail mobgimg addpicbtn" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="上傳圖片">
                             </a>
                         </div>
                         <?php echo $imgmanoutput; ?>
@@ -314,10 +322,10 @@ if(($result) && ($result->num_rows!==0)) {
                     <div class="row text-center text-lg-left">
                         <div class="col-lg-4 col-md-4 col-xs-6">
                             <a href="#" class="d-block mb-4 h-100" onclick="$('#imagetype').val('productbg');$('#picUploadModal').modal()">
-                                <img id="addpicbtn" class="img-fluid img-thumbnail mobgimg" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" title="上傳圖片">
+                                <img class="img-fluid img-thumbnail mobgimg addpicbtn" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="上傳圖片">
                             </a>
                         </div>
-
+                        <?php echo $imgmanoutput2; ?>
                     </div>
                 </div>
                 <div class="modal-footer">
