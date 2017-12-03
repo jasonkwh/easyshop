@@ -8,6 +8,7 @@ $query = "select * from moproducts where Id=" . $_REQUEST['id'];
 $result = $mysqli->query($query);
 $productname = "商品名稱";
 $descriptions = "此處為商品介紹 (限300英文字)";
+$producttitle = '';
 if(($result) && ($result->num_rows!==0)) {
     $row=$result->fetch_assoc();
     $merchantid = $row['MerchantId'];
@@ -21,6 +22,7 @@ if($_SESSION['mousertype']==1) {
         $row = $result->fetch_assoc();
         if($row['MerchantId']==$merchantid) {
             $permissiontoedit = 1;
+            $producttitle = 'data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片"';
         }
     }
 }
@@ -201,12 +203,12 @@ if(($result) && ($result->num_rows!==0)) {
                 }
             }
             ?>
-        <button class="col-md-4 moproducts grow" data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
+        <button class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
             <div class="row">
-                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
-                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
-                <button data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片" onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
+                <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
+                <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
+                <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
             </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
