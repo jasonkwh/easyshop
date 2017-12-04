@@ -85,6 +85,25 @@ $ ->
     return
   return
 
+@registerdialog = ->
+  $.confirm
+    icon: 'fa fa-pencil-square'
+    theme: 'material'
+    title: '用戶註冊'
+    content: '<div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="用戶名" class="form-control input-login" aria-label="用戶名" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="電子郵件地址" class="form-control input-login" aria-label="電子郵件地址" /><span class="input-group-addon input-login-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="密碼" class="form-control input-login" aria-label="密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="確認密碼" class="form-control input-login" aria-label="確認密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><hr/><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="姓" class="form-control input-login" aria-label="姓" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group"><input type="text" placeholder="名" class="form-control input-login" aria-label="名" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>'
+    typeAnimated: true
+    closeIcon: true
+    buttons:
+      submitBtn:
+        text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
+        btnClass: 'btn btn-success btn-nav btn-error'
+        action:->
+      closeBtn:
+        text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;取消'
+        btnClass: 'btn btn-outline-success btn-nav btn-error btn-success-cancel'
+        action:->
+  return
+
 @logindialog = ->
   username = ''
   password = ''
@@ -101,7 +120,7 @@ $ ->
   content = '<div class="input-group" style="margin-bottom:10px"><input id="username" type="text" placeholder="用戶名或電子郵件地址" class="form-control input-login" aria-label="用戶名或電子郵件地址" value="' + username + '" onchange="' + inputaction + '" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="password" type="password" placeholder="密碼" class="form-control input-login" aria-label="密碼" value="' + password + '" onchange="' + inputaction + '" /><span class="input-group-addon input-login-addon"><i class="fa fa-lock" aria-hidden="true"></i></span></div><div class="row" style="margin-bottom:-5px"><div class="col-6"><div style="float:left;margin-left:5px" class="form-check abc-checkbox abc-checkbox-success abc-checkbox-circle"><input class="form-check-input" id="rememberme" type="checkbox" ' + checked + ' onclick="' + changestatus + '"><label class="form-check-label" for="rememberme">記住密碼</label></div></div><div class="col-6"><a style="float:right;color:#28a745" href="#">忘記密碼？</a></div></div>'
   setTimeout (->
     $('.jconfirm-buttons').css 'margin-bottom', -10
-    $('.jconfirm-buttons').append '<span style="font-size:13px">想成為會員？<a href="#" style="color:#28a745">點此註冊</a></span>'
+    $('.jconfirm-buttons').append '<span style="font-size:13px">想成為會員？<a href="#" onclick="registerdialog()" style="color:#28a745">點此註冊</a></span>'
     return
   ), 250
   $.confirm

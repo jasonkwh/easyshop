@@ -24,7 +24,7 @@ body {
 .btn-error-cancel { border:1px solid #dc3545!important; }
 .btn-success-cancel { border:1px solid #28a745!important; }
 .jconfirm-icon-c .fa-warning { color: #dc3545!important; }
-.jconfirm-icon-c .fa-check-square,.jconfirm-icon-c .fa-file-text { color: #28a745!important; }
+.jconfirm-icon-c .fa-check-square,.jconfirm-icon-c .fa-pencil-square,.jconfirm-icon-c .fa-file-text { color: #28a745!important; }
 .input-login {
     font-size:13px;
     border-top-left-radius:30px;
