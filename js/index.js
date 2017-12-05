@@ -104,14 +104,42 @@
       icon: 'fa fa-pencil-square',
       theme: 'material',
       title: '用戶註冊',
-      content: '<div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="用戶名" class="form-control input-login" aria-label="用戶名" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="電子郵件地址" class="form-control input-login" aria-label="電子郵件地址" /><span class="input-group-addon input-login-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="密碼" class="form-control input-login" aria-label="密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="確認密碼" class="form-control input-login" aria-label="確認密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><hr/><div class="input-group" style="margin-bottom:10px"><input type="text" placeholder="姓" class="form-control input-login" aria-label="姓" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group"><input type="text" placeholder="名" class="form-control input-login" aria-label="名" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>',
+      content: '<div class="input-group" style="margin-bottom:10px"><input id="regiuser" type="text" placeholder="用戶名 (至少6位英文或數字)" class="form-control input-login" aria-label="用戶名" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regiemail" type="text" placeholder="電子郵件地址" class="form-control input-login" aria-label="電子郵件地址" /><span class="input-group-addon input-login-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regipwd" type="password" placeholder="密碼 (至少6位英文或數字)" class="form-control input-login" aria-label="密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regiconfpwd" type="password" placeholder="確認密碼 (至少6位英文或數字)" class="form-control input-login" aria-label="確認密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><hr/><div class="input-group" style="margin-bottom:10px"><input id="regisurname" type="text" placeholder="姓" class="form-control input-login" aria-label="姓" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group"><input id="reginame" type="text" placeholder="名" class="form-control input-login" aria-label="名" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>',
       typeAnimated: true,
       closeIcon: true,
       buttons: {
         submitBtn: {
           text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定',
           btnClass: 'btn btn-success btn-nav btn-error',
-          action: function() {}
+          action: function() {
+            if ($('#regiuser').val() === "" || $('#regiuser').val() === null) {
+              errordialog('用戶名不能為空');
+              return false;
+            } else if ($('#regiuser').val() !== "" && $('#regiuser').val() !== null && (!(isAlphaOrNumber($('#regiuser').val())) || $('#regiuser').val().length < 6)) {
+              errordialog('用戶名格式不正確');
+              return false;
+            } else if ($('#regiemail').val() === "" || $('#regiemail').val() === null) {
+              errordialog('電子郵件地址不能為空');
+              return false;
+            } else if ($('#regiemail').val() !== "" && $('#regiemail').val() !== null && !(isValidEmailAddress($('#regiemail').val()))) {
+              errordialog('電子郵件格式不正確');
+              return false;
+            } else if ($('#regipwd').val() === "" || $('#regipwd').val() === null || $('#regiconfpwd').val() === "" || $('#regiconfpwd').val() === null) {
+              errordialog('密碼不能為空');
+              return false;
+            } else if ($('#regipwd').val() !== "" && $('#regipwd').val() !== null && $('#regiconfpwd').val() !== "" && $('#regiconfpwd').val() !== null && (!(isAlphaOrNumber($('#regipwd').val())) || $('#regipwd').val().length < 6 || !(isAlphaOrNumber($('#regipwd').val())) || $('#regiconfpwd').val().length < 6)) {
+              errordialog('密碼格式不正確');
+              return false;
+            } else if ($('#regipwd').val() !== "" && $('#regipwd').val() !== null && $('#regiconfpwd').val() !== "" && $('#regiconfpwd').val() !== null && ($('#regipwd').val() !== $('#regiconfpwd').val())) {
+              errordialog('密碼不一致');
+              return false;
+            } else if ($('#regisurname').val() === "" || $('#regisurname').val() === null || $('#reginame').val() === "" || $('#reginame').val() === null) {
+              errordialog('姓名不能為空');
+              return false;
+            } else {
+              return true;
+            }
+          }
         },
         closeBtn: {
           text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;取消',
@@ -120,6 +148,21 @@
         }
       }
     });
+  };
+
+  this.isValidEmailAddress = function(emailAddress) {
+    var pattern;
+    pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+  };
+
+  this.isAlphaOrNumber = function(str) {
+    var isAlpha;
+    isAlpha = false;
+    if (str !== '') {
+      isAlpha = /^[a-zA-Z()\s\d]+$/.test(str);
+    }
+    return isAlpha;
   };
 
   this.logindialog = function() {
