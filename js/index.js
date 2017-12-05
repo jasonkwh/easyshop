@@ -137,6 +137,19 @@
               errordialog('姓名不能為空');
               return false;
             } else {
+              $.post('registeruser.php', {
+                username: $('#regiuser').val(),
+                firstname: $('#reginame').val(),
+                lastname: $('#regisurname').val(),
+                pwd: $('#regipwd').val(),
+                emailaddress: $('#regiemail').val()
+              }).done(function(data) {
+                if (data === 'success') {
+                  successlogindialog('註冊成功!');
+                } else {
+                  errordialog('註冊失敗，請聯繫系統管理員');
+                }
+              });
               return true;
             }
           }

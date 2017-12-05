@@ -8,8 +8,8 @@ if (session_id() === "") {
 setcookie(session_name(),session_id(),time()+$lifetime);
 require_once('db.php');
 
-$username = $_POST['username'];
-$password = hash('sha256',$_POST['password']);
+$username = $mysqli->real_escape_string($_POST['username']);
+$password = hash('sha256',$mysqli->real_escape_string($_POST['password']));
 $output = "";
 
 $query = "select * from mousers where (Username='" . $username . "' or Email='" . $username . "') and Pwd='" . $password . "'";
