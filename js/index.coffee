@@ -40,6 +40,12 @@ $ ->
       successuploaddialog(getParameterByName('msg'))
     else
       errordialog(getParameterByName('msg'))
+  if getParameterByName('productbgupload') != null
+    do openproductimgmanager
+    if parseInt(getParameterByName('productbgupload')) == 1
+      successuploaddialog(getParameterByName('msg'))
+    else
+      errordialog(getParameterByName('msg'))
   $('#showsearchbar').on 'click', (event) ->
     if showsmallsearchbar == 0
       $('#smallsearchbar').show()
@@ -393,6 +399,10 @@ getParameterByName = (name, url) ->
                     $('.mobgimghref img').removeClass 'mobgimgselected'
                     $('#mobgimg_' + String(data) + ' img').addClass 'mobgimgselected'
                     loadmerbgimg(merchantid)
+                else if typeid == 3
+                  if data != "success"
+                    $('.mobgimghref2 img').removeClass 'mobgimgselected'
+                    $('#mobgimg_' + String(data) + ' img').addClass 'mobgimgselected'
               else
                 errordialog('圖片刪除失敗')
               return
@@ -444,7 +454,7 @@ getParameterByName = (name, url) ->
 
 @openproductimgmanager = ->
   $('#picManageModal2').modal()
-  setTimeout "$('.mobgimg').css('width',$('.addpicbtn').outerWidth()); $('.mobgimg').css('height',$('.addpicbtn').outerHeight());",250
+  setTimeout "$('.mobgimg2').css('width',$('.addpicbtn2').outerWidth()); $('.mobgimg2').css('height',$('.addpicbtn2').outerHeight());",250
   return
 
 @loadindexbgimg = ->
@@ -462,6 +472,9 @@ getParameterByName = (name, url) ->
       'background-image': '-o-linear-gradient(0deg,rgba(255,255,255,1),rgba(255,255,255,0.7),rgba(255,255,255,0.3),rgba(255,255,255,0),rgba(255,255,255,0)), url(' + data + ')'
       'background-image': 'linear-gradient(0deg,rgba(255,255,255,1),rgba(255,255,255,0.7),rgba(255,255,255,0.3),rgba(255,255,255,0),rgba(255,255,255,0)), url(' + data + ')'
     return
+  return
+
+@loadprodbgimg = (productid) ->
   return
 
 getquerystringid = ->

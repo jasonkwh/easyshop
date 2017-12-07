@@ -47,6 +47,34 @@ if($loggedin==1) {
             } else {
                 $output = "failed";
             }
+        } else if($_POST['deletemobgimg']==3) {
+            $query = "select usr.MerchantId from mousers usr inner join moproducts prod on usr.MerchantId=prod.MerchantId and prod.Id=" . $_POST['merchantid'] . " WHERE usr.Id=" . $_SESSION['mouserid'];
+            $result = $mysqli->query($query);
+            if(($result) && ($result->num_rows!==0)) {
+                $query="select Id,selected from moproductimgs where Id=" . $_POST['mobgimgid'];
+                $result2=$mysqli->query($query);
+                if(($result2) && ($result2->num_rows!==0)) {
+                    $row = $result2->fetch_assoc();
+                    $query = "UPDATE moproductimgs SET TrashedDate=NOW() WHERE Id=" . $_POST['mobgimgid'];
+                    $mysqli->query($query);
+                    if($row['selected']==0) {
+                        $output = "success";
+                    } else {
+                        $query = "update moproductimgs set selected=0 where ProductId=" . $_POST['merchantid'];
+                        $mysqli->query($query);
+                        $query = "select Id from moproductimgs where ProductId=" . $_POST['merchantid'] . " and TrashedDate is null order by Id desc limit 1";
+                        $result3 = $mysqli->query($query);
+                        $row3 = $result3->fetch_assoc();
+                        $query = "update moproductimgs set selected=1 where Id=" . $row3['Id'];
+                        $mysqli->query($query);
+                        $output = $row3['Id'];
+                    }
+                } else {
+                    $output = "failed";
+                }
+            } else {
+                $output = "failed";
+            }
         } else {
             $output = "failed";
         }

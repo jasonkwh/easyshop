@@ -56,6 +56,14 @@
         errordialog(getParameterByName('msg'));
       }
     }
+    if (getParameterByName('productbgupload') !== null) {
+      openproductimgmanager();
+      if (parseInt(getParameterByName('productbgupload')) === 1) {
+        successuploaddialog(getParameterByName('msg'));
+      } else {
+        errordialog(getParameterByName('msg'));
+      }
+    }
     $('#showsearchbar').on('click', function(event) {
       if (showsmallsearchbar === 0) {
         $('#smallsearchbar').show();
@@ -438,6 +446,11 @@
                     $('#mobgimg_' + String(data) + ' img').addClass('mobgimgselected');
                     loadmerbgimg(merchantid);
                   }
+                } else if (typeid === 3) {
+                  if (data !== "success") {
+                    $('.mobgimghref2 img').removeClass('mobgimgselected');
+                    $('#mobgimg_' + String(data) + ' img').addClass('mobgimgselected');
+                  }
                 }
               } else {
                 errordialog('圖片刪除失敗');
@@ -497,7 +510,7 @@
 
   this.openproductimgmanager = function() {
     $('#picManageModal2').modal();
-    setTimeout("$('.mobgimg').css('width',$('.addpicbtn').outerWidth()); $('.mobgimg').css('height',$('.addpicbtn').outerHeight());", 250);
+    setTimeout("$('.mobgimg2').css('width',$('.addpicbtn2').outerWidth()); $('.mobgimg2').css('height',$('.addpicbtn2').outerHeight());", 250);
   };
 
   this.loadindexbgimg = function() {
@@ -517,6 +530,8 @@
       });
     });
   };
+
+  this.loadprodbgimg = function(productid) {};
 
   getquerystringid = function() {
     var final_id, id_check, match, url;

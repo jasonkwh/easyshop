@@ -37,19 +37,31 @@ if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg
 }
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-    header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=0&msg=' . $output);
+    if($imagetype=="productbg") {
+        header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&productbgupload=0&msg=' . $output);
+    } else {
+        header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=0&msg=' . $output);
+    }
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         if($imagetype=="homepagebg") {
             $query = "insert into mohomepagebg (FileName,FileUrl,CreatedDate) VALUES ('" . basename( $_FILES["fileToUpload"]["name"]) . "','/" . $target_file . "',NOW())";
+            $mysqli->query($query);
+            header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
         } else if($imagetype=="merchantbg") {
             $query = "update momerchantbg set selected=0 where MerchantId=" . $bgimgid;
             $mysqli->query($query);
             $query = "insert into momerchantbg (MerchantId,FileName,FileUrl,CreatedDate,selected) VALUES (" . $bgimgid. ",'" . basename( $_FILES["fileToUpload"]["name"]) . "','/" . $target_file . "',NOW(),1)";
+            $mysqli->query($query);
+            header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
+        } else if($imagetype=="productbg") {
+            $query = "update moproductimgs set selected=0 where ProductId=" . $bgimgid;
+            $mysqli->query($query);
+            $query = "insert into moproductimgs (ProductId,FileName,FileUrl,CreatedDate,selected) VALUES (" . $bgimgid . ",'" .basename( $_FILES["fileToUpload"]["name"])  . "','/" . $target_file . "',NOW(),1)";
+            $mysqli->query($query);
+            header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&productbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
         }
-        $mysqli->query($query);
-        header('Location: ' . $_SESSION['mocurrenturl'] . '?id=' . $bgimgid . '&adminbgupload=1&msg=您的文件 '. basename( $_FILES["fileToUpload"]["name"]) . ' 已上傳成功');
     }
 }
 ?>

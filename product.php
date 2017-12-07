@@ -150,9 +150,9 @@ $imgmanoutput2 = "";
 if(($result) && ($result->num_rows!==0)) {
     while($row = $result->fetch_assoc()) {
         if($row['selected']==1) {
-            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashpdimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
+            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref2"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',3,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg2 mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
         } else {
-            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashpdimg(' . $row['Id'] . ',2,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
+            $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref2"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',3,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg2" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
         }
     }
 }
@@ -324,7 +324,7 @@ if(($result) && ($result->num_rows!==0)) {
                     <div class="row text-center text-lg-left">
                         <div class="col-lg-4 col-md-4 col-xs-6">
                             <a href="#" class="d-block mb-4 h-100" onclick="$('#imagetype').val('productbg');$('#picUploadModal').modal()">
-                                <img class="img-fluid img-thumbnail mobgimg addpicbtn" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="上傳圖片">
+                                <img class="img-fluid img-thumbnail mobgimg2 addpicbtn2" src="/img/addpic.png" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="上傳圖片">
                             </a>
                         </div>
                         <?php echo $imgmanoutput2; ?>
@@ -349,8 +349,7 @@ if(($result) && ($result->num_rows!==0)) {
                     <form id="adminbgimageform" action="imageupload.php" method="post" enctype="multipart/form-data" onsubmit="waitingdialog()">
                         請選擇需要上傳的文件：
                         <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="hidden" id="imagetype" name="imagetype" value="merchantbg">
-                        <input type="hidden" id="productid" name="productid" value="<?php echo $_REQUEST['id']; ?>">
+                        <input type="hidden" id="imagetype" name="imagetype" value="productbg">
                     </form>
                 </div>
                 <div class="modal-footer">
