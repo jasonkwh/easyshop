@@ -98,6 +98,10 @@ if($_SESSION['mousertype']==1) {
             });
         }
 
+        function selectthispd(e) {
+
+        }
+
         function goBack() {
             <?php if($permissiontoedit==1) { ?>
             $.confirm({
@@ -144,14 +148,18 @@ if(($result) && ($result->num_rows!==0)) {
     }
     echo "background-size:cover;background-attachment:fixed;";
 }
+$imageurls = array();
 $query = "select Id,FileName,FileUrl,selected from moproductimgs where TrashedDate is null and ProductId=" . $_REQUEST['id'];
 $result = $mysqli->query($query);
 $imgmanoutput2 = "";
+$mainimageurl = "";
 if(($result) && ($result->num_rows!==0)) {
     while($row = $result->fetch_assoc()) {
         if($row['selected']==1) {
+            $mainimageurl = $row['FileUrl'];
             $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref2"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',3,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg2 mobgimgselected" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
         } else {
+            array_push($imageurls,$row['FileUrl']);
             $imgmanoutput2 .= '<div id="mopd_' . $row['Id'] . '" class="col-lg-4 col-md-4 col-xs-6"><a id="mopdimg_' . $row['Id'] . '" href="#" onclick="selectthispd($(this))" class="d-block mb-4 h-100 mobgimghref2"><button type="button" class="btn btn-sm btn-danger rounded-circle mobgclose" onclick="trashbgimg(' . $row['Id'] . ',3,' . $_REQUEST['id'] . ')" style="width:30px;height:30px"><i class="fa fa-times" aria-hidden="true"></i></button><img class="img-fluid img-thumbnail mobgimg2" src="' . $row['FileUrl'] . '" alt="" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['FileName'] . '"></a></div>';
         }
     }
@@ -193,22 +201,12 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
     <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;保存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
-        <?php
-            $imageurls = array();
-            $query = "select * from moproductimgs where TrashedDate is null and ProductId=" . $_REQUEST['id'] . " order by ImgOrder asc";
-            $result = $mysqli->query($query);
-            if(($result) && ($result->num_rows!==0)) {
-                while($row = $result->fetch_assoc()) {
-                    array_push($imageurls,$row['FileUrl']);
-                }
-            }
-            ?>
-        <button class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
+        <button class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
             <div class="row">
+                <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[0])) { echo $imageurls[0]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
                 <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
                 <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
-                <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[3])) { echo $imageurls[3]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
             </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">

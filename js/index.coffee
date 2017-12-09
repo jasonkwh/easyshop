@@ -391,18 +391,20 @@ getParameterByName = (name, url) ->
             merchantid: merchantid).done (data) ->
               if data != "failed"
                 successlogindialog('刪除成功')
-                $('#mobg_'+mobgimgid).fadeOut 500
                 if typeid == 1
+                  $('#mobg_'+mobgimgid).fadeOut 500
                   do loadindexbgimg
                 else if typeid == 2
+                  $('#mobg_'+mobgimgid).fadeOut 500
                   if data != "success"
                     $('.mobgimghref img').removeClass 'mobgimgselected'
                     $('#mobgimg_' + String(data) + ' img').addClass 'mobgimgselected'
                     loadmerbgimg(merchantid)
                 else if typeid == 3
+                  $('#mopd_'+mobgimgid).fadeOut 500
                   if data != "success"
                     $('.mobgimghref2 img').removeClass 'mobgimgselected'
-                    $('#mobgimg_' + String(data) + ' img').addClass 'mobgimgselected'
+                    $('#mopdimg_' + String(data) + ' img').addClass 'mobgimgselected'
               else
                 errordialog('圖片刪除失敗')
               return

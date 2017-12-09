@@ -113,6 +113,9 @@ body {
 .mobgimghref { margin-top:0px; }
 .mobgimghref:hover { margin-top:-30px; }
 .mobgimghref:hover>.mobgclose { display: block; }
+.mobgimghref2 { margin-top:0px; }
+.mobgimghref2:hover { margin-top:-30px; }
+.mobgimghref2:hover>.mobgclose { display: block; }
 .mobgimgselected { background-color: #28a745; }
 .grow { transition: all .2s ease-in-out;z-index:0; }
 .grow:hover { transform: scale(1.05);z-index:10; }

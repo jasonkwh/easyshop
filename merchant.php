@@ -175,38 +175,6 @@ if(($result) && ($result->num_rows!==0)) {
     </div>
 
     <br>
-
-    <div class="row">
-        <div class="card col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="row">
-        <div class="card col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
-
-    <br>
     <footer>
         <p class="text-center">test footer</p>
     </footer>

@@ -437,19 +437,21 @@
             }).done(function(data) {
               if (data !== "failed") {
                 successlogindialog('刪除成功');
-                $('#mobg_' + mobgimgid).fadeOut(500);
                 if (typeid === 1) {
+                  $('#mobg_' + mobgimgid).fadeOut(500);
                   loadindexbgimg();
                 } else if (typeid === 2) {
+                  $('#mobg_' + mobgimgid).fadeOut(500);
                   if (data !== "success") {
                     $('.mobgimghref img').removeClass('mobgimgselected');
                     $('#mobgimg_' + String(data) + ' img').addClass('mobgimgselected');
                     loadmerbgimg(merchantid);
                   }
                 } else if (typeid === 3) {
+                  $('#mopd_' + mobgimgid).fadeOut(500);
                   if (data !== "success") {
                     $('.mobgimghref2 img').removeClass('mobgimgselected');
-                    $('#mobgimg_' + String(data) + ' img').addClass('mobgimgselected');
+                    $('#mopdimg_' + String(data) + ' img').addClass('mobgimgselected');
                   }
                 }
               } else {
