@@ -122,6 +122,18 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['selectproductimg']) && isset($_POST['bgimgid'])) {
+        $query = "select usr.MerchantId from mousers usr inner join moproducts prod on usr.MerchantId=prod.MerchantId and prod.Id=" . $_POST['productid'] . " WHERE usr.Id=" . $_SESSION['mouserid'];
+        $result = $mysqli->query($query);
+        if(($result) && ($result->num_rows!==0)) {
+            $query = "update moproductimgs set selected=0 where ProductId=" . $_POST['productid'];
+            $mysqli->query($query);
+            $query = "update moproductimgs set selected=1 where Id=" . $_POST['bgimgid'];
+            $mysqli->query($query);
+            $output = "success";
+        } else {
+            $output = "failed";
+        }
     } else if(isset($_POST['pageorderup']) && isset($_POST['pageid']) && isset($_POST['prevpageid'])) {
         $query = "SELECT * FROM mousers WHERE Id=" . $_SESSION['mouserid'] . " AND UserType=2";
         $result = $mysqli->query($query);

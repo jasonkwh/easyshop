@@ -452,6 +452,7 @@
                   if (data !== "success") {
                     $('.mobgimghref2 img').removeClass('mobgimgselected');
                     $('#mopdimg_' + String(data) + ' img').addClass('mobgimgselected');
+                    loadprodbgimg(merchantid);
                   }
                 }
               } else {
@@ -533,7 +534,11 @@
     });
   };
 
-  this.loadprodbgimg = function(productid) {};
+  this.loadprodbgimg = function(productid) {
+    $.get('getprodbg.php?id=' + productid, function(data) {
+      $('#productimggallery').html(data);
+    });
+  };
 
   getquerystringid = function() {
     var final_id, id_check, match, url;

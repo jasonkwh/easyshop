@@ -405,6 +405,7 @@ getParameterByName = (name, url) ->
                   if data != "success"
                     $('.mobgimghref2 img').removeClass 'mobgimgselected'
                     $('#mopdimg_' + String(data) + ' img').addClass 'mobgimgselected'
+                    loadprodbgimg(merchantid)
               else
                 errordialog('圖片刪除失敗')
               return
@@ -477,6 +478,9 @@ getParameterByName = (name, url) ->
   return
 
 @loadprodbgimg = (productid) ->
+  $.get 'getprodbg.php?id=' + productid, (data) ->
+    $('#productimggallery').html data
+    return
   return
 
 getquerystringid = ->

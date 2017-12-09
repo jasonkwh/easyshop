@@ -99,7 +99,20 @@ if($_SESSION['mousertype']==1) {
         }
 
         function selectthispd(e) {
-
+            var selecteditem = e.attr('id').split('_')[1];
+            $.post('newpage.php', {
+                selectproductimg: 1,
+                bgimgid: selecteditem,
+                productid: <?php echo $_REQUEST['id']; ?>
+            }).done(function(data) {
+                if(data === "success") {
+                    $('.mobgimghref2 img').removeClass('mobgimgselected');
+                    $('#'+e.attr('id') + ' img').addClass('mobgimgselected');
+                    loadprodbgimg(<?php echo $_REQUEST['id']; ?>);
+                } else {
+                    errordialog('選擇圖片失敗');
+                }
+            });
         }
 
         function goBack() {
@@ -201,6 +214,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
     <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;保存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
+        <div id="productimggallery">
         <button class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
             <div class="row">
@@ -208,6 +222,7 @@ if(($result) && ($result->num_rows!==0)) {
                 <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[1])) { echo $imageurls[1]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
                 <button <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
             </div>
+        </div>
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
             <div class="row">
