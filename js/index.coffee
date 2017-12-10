@@ -478,8 +478,13 @@ getParameterByName = (name, url) ->
   return
 
 @loadprodbgimg = (productid) ->
-  $.get 'getprodbg.php?id=' + productid, (data) ->
-    $('#productimggallery').html data
+  $.get 'getprodbg.php?id=' + productid + '&selected=0', (data) ->
+    if data != 'failed'
+      obj = JSON.parse data
+      $('#productimg0').css 'background-image', 'url(' + obj.A + ')'
+      $('#productimg1').css 'background-image', 'url(' + obj.B + ')'
+      $('#productimg2').css 'background-image', 'url(' + obj.C + ')'
+      $('#productimg3').css 'background-image', 'url(' + obj.D + ')'
     return
   return
 
