@@ -9,11 +9,13 @@ $result = $mysqli->query($query);
 $productname = "商品名稱";
 $descriptions = "此處為商品介紹 (限300英文字)";
 $producttitle = '';
+$price = "";
 if(($result) && ($result->num_rows!==0)) {
     $row=$result->fetch_assoc();
     $merchantid = $row['MerchantId'];
     $productname = $row['Name'];
     $descriptions = $row['Descriptions'];
+    $price = $row['Price'];
 }
 if($_SESSION['mousertype']==1) {
     $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
@@ -78,6 +80,23 @@ if($_SESSION['mousertype']==1) {
                     }
                 }
                 ?>
+            });
+            $("#pricechanger").keydown(function (event) {
+                if (event.shiftKey == true) {
+                    event.preventDefault();
+                }
+                if ((event.keyCode >= 48 && event.keyCode <= 57) ||
+                    (event.keyCode >= 96 && event.keyCode <= 105) ||
+                    event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+                    event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190) {
+                } else {
+                    event.preventDefault();
+                }
+                if($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
+                    event.preventDefault();
+            });
+            $("#pricechanger").mouseleave(function() {
+                $(this).val(parseFloat($(this).val()).toFixed(2));
             });
         });
 
@@ -224,10 +243,13 @@ if(($result) && ($result->num_rows!==0)) {
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
             <div class="row">
-                <h4><span style="font-size:16px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
+                <h4><span style="font-size:20px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
             <div class="row">
-                <?php if($permissiontoedit==1) { echo "<textarea style='height:140px;width:95%;border:1px solid #d2d2d2;resize:none'>" . $descriptions . "</textarea></div><div class='row'><p style='font-size:12px'>剩餘 x 字</p>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
+                <?php if($permissiontoedit==1) { echo "<textarea style='height:120px;width:95%;border:1px solid #d2d2d2;resize:none'>" . $descriptions . "</textarea></div><div class='row'><p style='font-size:12px'>剩餘 x 字</p>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
+            </div>
+            <div class="row">
+                <h5>MOP$<?php if($permissiontoedit==1) { echo "<input id='pricechanger' type='text' placeholder='0.00' style='width:100px' value='" . $price . "' required>"; } else { echo $price; } ?></h5>
             </div>
             <div class="row">
                 <div class="col-1 align-self-center" style="padding:0;text-align:center">
