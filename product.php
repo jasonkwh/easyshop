@@ -47,6 +47,7 @@ if($_SESSION['mousertype']==1) {
     <script src="js/index.js"></script>
     <script>
         $(function(){
+            checkCharRemains();
             $('[data-toggle="tooltip"]').tooltip();
             $( ".dropdown" ).mouseover(function() {
                 <?php
@@ -81,24 +82,35 @@ if($_SESSION['mousertype']==1) {
                 }
                 ?>
             });
-            $("#pricechanger").keydown(function (event) {
-                if (event.shiftKey == true) {
-                    event.preventDefault();
-                }
-                if ((event.keyCode >= 48 && event.keyCode <= 57) ||
-                    (event.keyCode >= 96 && event.keyCode <= 105) ||
-                    event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
-                    event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190) {
-                } else {
-                    event.preventDefault();
-                }
-                if($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
-                    event.preventDefault();
+            $("#pricechanger").bind( "paste", function() {
+                replacenonnumbers();
             });
-            $("#pricechanger").mouseleave(function() {
-                $(this).val(parseFloat($(this).val()).toFixed(2));
+            $("#pricechanger").mouseout(function() {
+                tovalidcurrency();
+            });
+            $( "#shortdescedit" ).bind( "paste", function() {
+                setTimeout( function() {
+                    checkCharRemains();
+                }, 100);
             });
         });
+
+        function checkCharRemains() {
+            var remaining = 150-$('#shortdescedit').val().length;
+            if(remaining>0) {
+                $('#remainchars').html("<p style='font-size:12px;color:#000'>剩餘 " + remaining.toString() + " 字</p>");
+            } else {
+                $('#remainchars').html("<p style='font-size:12px;color:#ff0000'>剩餘 " + remaining.toString() + " 字</p>");
+            }
+        }
+
+        function replacenonnumbers() {
+            $('#pricechanger').val($('#pricechanger').val().replace(/[^0-9\.]+/g, ''));
+        }
+
+        function tovalidcurrency() {
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+        }
 
         function selectthis(e) {
             var selecteditem = e.attr('id').split('_')[1];
@@ -246,10 +258,10 @@ if(($result) && ($result->num_rows!==0)) {
                 <h4><span style="font-size:20px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
             <div class="row">
-                <?php if($permissiontoedit==1) { echo "<textarea style='height:120px;width:95%;border:1px solid #d2d2d2;resize:none'>" . $descriptions . "</textarea></div><div class='row'><p style='font-size:12px'>剩餘 x 字</p>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
+                <?php if($permissiontoedit==1) { echo "<textarea id='shortdescedit' style='height:120px;width:95%;border:1px solid #d2d2d2;resize:none' onkeyup='checkCharRemains()'>" . $descriptions . "</textarea></div><div class='row'><span id='remainchars'></span>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
             </div>
             <div class="row">
-                <h5>MOP$<?php if($permissiontoedit==1) { echo "<input id='pricechanger' type='text' placeholder='0.00' style='width:100px' value='" . $price . "' required>"; } else { echo $price; } ?></h5>
+                <h5>MOP$<?php if($permissiontoedit==1) { echo "<input id='pricechanger' type='text' placeholder='0.00' style='width:100px' value='" . $price . "' onkeyup='replacenonnumbers()' required>"; } else { echo $price; } ?></h5>
             </div>
             <div class="row">
                 <div class="col-1 align-self-center" style="padding:0;text-align:center">
