@@ -47,7 +47,9 @@ if($_SESSION['mousertype']==1) {
     <script src="js/index.js"></script>
     <script>
         $(function(){
+            <?php if($permissiontoedit==1) { ?>
             checkCharRemains();
+            <?php } ?>
             $('[data-toggle="tooltip"]').tooltip();
             $( ".dropdown" ).mouseover(function() {
                 <?php
@@ -195,6 +197,7 @@ if($_SESSION['mousertype']==1) {
             $('#moquantities').val(parseInt($('#moquantities').val())+1);
         }
 
+        <?php if($permissiontoedit==1) { ?>
         function savecontents() {
             tovalidcurrency();
             replacenonnumbers();
@@ -210,6 +213,7 @@ if($_SESSION['mousertype']==1) {
                 }
             });
         }
+        <?php } ?>
     </script>
 </head>
 <body style="height:100%;<?php
@@ -341,7 +345,9 @@ if(($result) && ($result->num_rows!==0)) {
     </div>
     <br>
     <footer>
-        <p class="text-center">test footer</p>
+        <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+            <p>test footer</p>
+        </div>
     </footer>
 </div>
 <div id="merchantcontainer" style="display:none"></div>
