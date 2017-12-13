@@ -83,7 +83,7 @@ if($_SESSION['mousertype']==1) {
                 ?>
             });
             $("#pricechanger").bind( "paste", function() {
-                replacenonnumbers();
+                replacenonnumbersanddot();
             });
             $("#pricechanger").mouseout(function() {
                 tovalidcurrency();
@@ -104,12 +104,12 @@ if($_SESSION['mousertype']==1) {
             }
         }
 
-        function replacenonnumbers() {
+        function replacenonnumbersanddot() {
             $('#pricechanger').val($('#pricechanger').val().replace(/[^0-9\.]+/g, ''));
         }
 
         function tovalidcurrency() {
-            $(this).val(parseFloat($(this).val()).toFixed(2));
+            $('#pricechanger').val(parseFloat($('#pricechanger').val()).toFixed(2));
         }
 
         function selectthis(e) {
@@ -174,6 +174,41 @@ if($_SESSION['mousertype']==1) {
                 }
             });
             <?php } ?>
+        }
+
+        function replacenonnumbers() {
+            $('#moquantities').val($('#moquantities').val().replace(/[^0-9]+/g, ''));
+            if($('#moquantities').val()=="") {
+                $('#moquantities').val(1);
+            }
+        }
+
+        function minusquantities() {
+            replacenonnumbers();
+            if(parseInt($('#moquantities').val())>1) {
+                $('#moquantities').val(parseInt($('#moquantities').val())-1);
+            }
+        }
+
+        function addquantities() {
+            replacenonnumbers();
+            $('#moquantities').val(parseInt($('#moquantities').val())+1);
+        }
+
+        function savecontents() {
+            tovalidcurrency();
+            replacenonnumbers();
+            $.post('saveproduct.php', {
+                productid: <?php echo $_REQUEST['id']; ?>,
+                productname: $('#moproductname').val(),
+                productshortdesc: $('#shortdescedit').val(),
+                productprice: $('#pricechanger').val(),
+                productquantities: $('#moquantities').val()
+            }).done(function(data) {
+                if (data === "success") {
+
+                }
+            });
         }
     </script>
 </head>
@@ -255,23 +290,23 @@ if(($result) && ($result->num_rows!==0)) {
         </div>
         <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
             <div class="row">
-                <h4><span style="font-size:20px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
+                <h4><span style="font-size:20px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input id='moproductname' type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
             <div class="row">
                 <?php if($permissiontoedit==1) { echo "<textarea id='shortdescedit' style='height:120px;width:95%;border:1px solid #d2d2d2;resize:none' onkeyup='checkCharRemains()'>" . $descriptions . "</textarea></div><div class='row'><span id='remainchars'></span>"; } else { echo "<p>" . $descriptions . "</p>"; }?>
             </div>
             <div class="row">
-                <h5>MOP$<?php if($permissiontoedit==1) { echo "<input id='pricechanger' type='text' placeholder='0.00' style='width:100px' value='" . $price . "' onkeyup='replacenonnumbers()' required>"; } else { echo $price; } ?></h5>
+                <h5>MOP$<?php if($permissiontoedit==1) { echo "<input id='pricechanger' type='text' placeholder='0.00' style='width:100px' value='" . $price . "' onkeyup='replacenonnumbersanddot()' required>"; } else { echo $price; } ?></h5>
             </div>
             <div class="row">
                 <div class="col-1 align-self-center" style="padding:0;text-align:center">
-                <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="if(parseInt($('#moquantities').val())>0) { $('#moquantities').val(parseInt($('#moquantities').val())-1); }"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="minusquantities()"><i class="fa fa-minus" aria-hidden="true"></i></button>
                 </div>
                 <div class="col-2 align-self-center" style="padding:0;text-align:center">
                     <div class="input-group"><input id="moquantities" type="text" placeholder="數量" class="form-control input-login" value="1"><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>
                 </div>
                 <div class="col-1 align-self-center" style="padding:0;text-align:center">
-                    <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="$('#moquantities').val(parseInt($('#moquantities').val())+1);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-success rounded-circle" style="width:31px;height:31px" onclick="addquantities()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                 </div>
                 </div>
             <div class="row" style="margin-top:10px">
