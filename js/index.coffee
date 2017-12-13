@@ -224,7 +224,7 @@ $ ->
     typeAnimated: true
   return
 
-successlogindialog = (msg) ->
+@successlogindialog = (msg) ->
   $.confirm
     icon: 'fa fa-check-square'
     title: msg
