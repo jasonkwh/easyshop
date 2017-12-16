@@ -145,31 +145,37 @@ if(($result) && ($result->num_rows!==0)) {
         </div>
     </div>
     <div class="row">
-        <div class="card col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+        <div class="col-12 col-md-6" style="margin-bottom:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;最新商品</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <br>
+        <div class="col-12 col-md-6" style="margin-bottom:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;每週熱賣</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
 
-    <div class="row">
-        <div class="card col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+                </div>
             </div>
         </div>
     </div>
