@@ -138,14 +138,23 @@ if($_SESSION['mousertype']==1) {
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-6" style="margin-bottom:15px">
-            <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;&nbsp;入駐商家</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="row">
                     <?php
                     $query = "select Id,Name,LogoUrl from momerchants order by Name asc";
                     $result = $mysqli->query($query);
                     if(($result) && ($result->num_rows!==0)) {
                         while($row=$result->fetch_assoc()) {
-                            echo '<div class="col-4"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
+                            echo '<div class="col-3"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
                         }
                     }
                     ?>
@@ -153,39 +162,37 @@ if($_SESSION['mousertype']==1) {
             </div>
         </div>
 
-        <div class="col-12 col-md-6">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+        <div class="col-12 col-md-6" style="margin-bottom:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;每天最新</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
             </div>
         </div>
 
-        <div class="col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
-            </div>
-        </div>
+        <div class="col-md-12" style="margin-bottom:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
+                <div class="row" style="margin-bottom:15px">
+                    <div class="col-12">
+                        <ul class="nav nav-pills text-success">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;每月特價</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
 
-        <div class="col-md-12">
-            <div class="card-header">
-                title
-            </div>
-            <div class="card-block">
-                <blockquote class="card-blockquote">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                </blockquote>
+                </div>
             </div>
         </div>
     </div>

@@ -326,7 +326,7 @@ if(($result) && ($result->num_rows!==0)) {
             </div>
         </div>
         <div class="col-md-9">
-            <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
+            <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row">
                     <div class="col-12">
                         <ul class="nav nav-pills text-success">
@@ -345,9 +345,7 @@ if(($result) && ($result->num_rows!==0)) {
     </div>
     <br>
     <footer>
-        <div style="background-color:#fff;height:100%;border-radius:5px;padding:15px">
-            <p>test footer</p>
-        </div>
+        <p class="text-center">test footer</p>
     </footer>
 </div>
 <div id="merchantcontainer" style="display:none"></div>
