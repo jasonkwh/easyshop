@@ -25,6 +25,11 @@ if($_SESSION['mousertype']==1) {
     <script src="js/index.js"></script>
     <script>
         $(function(){
+            if ($(window).innerWidth() >= 768) {
+                $('#indexcontainer').offset({
+                    top: $('#photogallery').height() + $('#navbackground').height()
+                });
+            }
             $('[data-toggle="tooltip"]').tooltip();
             $( ".dropdown" ).mouseover(function() {
                 <?php
@@ -136,7 +141,7 @@ if($_SESSION['mousertype']==1) {
 </div>
 <div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" style="display:none"></div>
-<div class="container">
+<div id="indexcontainer" class="container">
     <div class="row">
         <div class="col-12 col-md-6" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
