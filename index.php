@@ -3,7 +3,7 @@ require_once('userstatus.php');
 $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",'?');
 $_SESSION['mopageid'] = $_REQUEST['id'];
 $permissiontoedit = 0;
-if($_SESSION['mousertype']==1) {
+if($_SESSION['mousertype']==2) {
     $permissiontoedit = 1;
 }
 ?>
@@ -27,7 +27,11 @@ if($_SESSION['mousertype']==1) {
         $(function(){
             if ($(window).innerWidth() >= 768) {
                 $('#indexcontainer').offset({
-                    top: $('#photogallery').height() + $('#navbackground').height()
+                    <?php if($permissiontoedit==1) { ?>
+                    top: $('#photogallery').height() + $('#navbackground').height() - 10
+                    <?php } else { ?>
+                    top: $('#photogallery').height() + $('#navbackground').height() + 15
+                    <?php } ?>
                 });
             }
             $('[data-toggle="tooltip"]').tooltip();
@@ -41,7 +45,7 @@ if($_SESSION['mousertype']==1) {
                     $lastrowcounter = 0;
                     $numofrows = $result->num_rows;
                     while($row = $result->fetch_assoc()) {
-                        if($_SESSION['mousertype']==2) {
+                        if($permissiontoedit==1) {
                             $pageshtml = str_replace("movepagedown(" . $prevpageid . "," . $prevpageid . ")","movepagedown(" . $prevpageid . "," . $row['Id'] . ")",$pageshtml);
                             echo "$('#pageid" . $row['Id'] . "menu').css('left',-($('#pageid" . $row['Id'] . "ctrls').width()/2-$('#pageid" . $row['Id'] . "btn').width()/2)-3);";
                             $pageshtml .= '<li id="pageid' . $row['Id'] . 'dropdown" class="nav-item dropdown mopages"><a id="pageid' . $row['Id'] . 'btn" class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $row['Name'] . '</a><div id="pageid' . $row['Id'] . 'menu" class="dropdown-menu pagebuttons" aria-labelledby="pageid' . $row['Id'] . '_controls">
@@ -81,7 +85,7 @@ if($_SESSION['mousertype']==1) {
                             <a class="nav-link active" href="/"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;&nbsp;首頁</a>
                         </li>
                         <?php echo $pageshtml;
-                        if($_SESSION['mousertype']==2) { ?>
+                        if($permissiontoedit==1) { ?>
                         <li class="nav-item">
                             <a id="newpage" class="nav-link" href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增頁面</a>
                         </li>
@@ -95,14 +99,14 @@ if($_SESSION['mousertype']==1) {
                 <p class="card-header" style="height:40px;background-color:#218838;color:#fff;font-size:13px;border-style:none"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;全部商品分類</p>
                 <div id="categorybody" class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px">
                     <div class="row" style="margin-left:0"><strong>测试</strong></div>
-                    <?php if($_SESSION['mousertype']==2) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
+                    <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
                 </div>
             </div>
         </div>
     </div> <!--MAIN-->
 </div>
-<div id="photogallery" class="container-fluid" style="padding:0px;margin-bottom:<?php if($_SESSION['mousertype']==2) { ?>0px<?php } else { ?>20px<?php } ?>;text-align:center;">
-    <div id="bgCarousel" class="carousel slide" data-ride="carousel" style="z-index:-100;<?php if($_SESSION['mousertype']==2) { ?>opacity:0.4<?php } ?>">
+<div id="photogallery" class="container-fluid" style="padding:0px;margin-bottom:<?php if($permissiontoedit==1) { ?>0px<?php } else { ?>20px<?php } ?>;text-align:center;">
+    <div id="bgCarousel" class="carousel slide" data-ride="carousel" style="z-index:-100;<?php if($permissiontoedit==1) { ?>opacity:0.4<?php } ?>">
         <ol class="carousel-indicators">
             <?php
             $query = "select * from mohomepagebg where TrashedDate is null";
@@ -137,7 +141,7 @@ if($_SESSION['mousertype']==1) {
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <?php if($_SESSION['mousertype']==2) { ?><button id="carouselsettingsbtn" type="button" class="btn btn-success rounded-circle" style="width:70px;height:70px;margin-top:-425px;z-index:100" onclick="openbgimgmanager()"><i class="fa fa-wrench" aria-hidden="true" style="font-size:25px"></i></button><?php } ?>
+    <?php if($permissiontoedit==1) { ?><button id="carouselsettingsbtn" type="button" class="btn btn-success rounded-circle" style="width:70px;height:70px;margin-top:-425px;z-index:100" onclick="openbgimgmanager()"><i class="fa fa-wrench" aria-hidden="true" style="font-size:25px"></i></button><?php } ?>
 </div>
 <div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" style="display:none"></div>
@@ -223,13 +227,13 @@ if($_SESSION['mousertype']==1) {
             </div>
             <div class="modal-body" style="background-color:#28a745;border-bottom-left-radius:3px">
                 <div class="row" style="margin-left:0"><strong>测试</strong></div>
-                <?php if($_SESSION['mousertype']==2) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
+                <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
             </div>
         </div>
     </div>
 </div>
 
-<?php if($_SESSION['mousertype']==2) { ?>
+<?php if($permissiontoedit==1) { ?>
 <div class="modal fade" id="picManageModal" tabindex="-1" role="dialog" aria-labelledby="picManageModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
