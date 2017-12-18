@@ -95,6 +95,13 @@ if($_SESSION['mousertype']==1) {
                     checkCharRemains();
                 }, 100);
             });
+            $('#categorycard').on('click', function(event) {
+                if (!$('#categorybody').is(':visible')) {
+                    $('#categorybody').show();
+                } else {
+                    $('#categorybody').hide();
+                }
+            });
         });
 
         function checkCharRemains() {

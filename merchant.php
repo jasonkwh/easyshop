@@ -66,6 +66,13 @@ if($_SESSION['mousertype']==1) {
                 }
                 ?>
             });
+            $('#categorycard').on('click', function(event) {
+                if (!$('#categorybody').is(':visible')) {
+                    $('#categorybody').show();
+                } else {
+                    $('#categorybody').hide();
+                }
+            });
         });
 
         function selectthis(e) {

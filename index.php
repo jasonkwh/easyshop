@@ -88,8 +88,9 @@ if($_SESSION['mousertype']==1) {
         <div id="categorycarddisplay" class="col-md-3" style="margin-bottom:10px;z-index:100">
             <div id="categorycard" class="card" style="border-style:none">
                 <p class="card-header" style="height:40px;background-color:#218838;color:#fff;font-size:13px;border-style:none"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;全部商品分類</p>
-                <div class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px">
-                    <?php if($_SESSION['mousertype']==2) { ?><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong><?php } ?>
+                <div id="categorybody" class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px">
+                    <div class="row" style="margin-left:0"><strong>测试</strong></div>
+                    <?php if($_SESSION['mousertype']==2) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
                 </div>
             </div>
         </div>
@@ -154,7 +155,7 @@ if($_SESSION['mousertype']==1) {
                     $result = $mysqli->query($query);
                     if(($result) && ($result->num_rows!==0)) {
                         while($row=$result->fetch_assoc()) {
-                            echo '<div class="col-3"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
+                            echo '<div class="col-4 col-md-3"><a href="merchant.php?id=' . $row['Id'] . '" data-toggle="tooltip" data-placement="bottom" data-original-title="' . $row['Name'] . '"><img src="' . $row['LogoUrl'] . '" style="width:100%"></a></div>';
                         }
                     }
                     ?>
@@ -216,7 +217,8 @@ if($_SESSION['mousertype']==1) {
                 </button>
             </div>
             <div class="modal-body" style="background-color:#28a745;border-bottom-left-radius:3px">
-                <?php if($_SESSION['mousertype']==2) { ?><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong><?php } ?>
+                <div class="row" style="margin-left:0"><strong>测试</strong></div>
+                <?php if($_SESSION['mousertype']==2) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
             </div>
         </div>
     </div>

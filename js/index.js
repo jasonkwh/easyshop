@@ -25,7 +25,8 @@
     $('.mosubproducts').css('height', $('.moproducts').outerWidth() / 3);
     $('.mosubproducts').parent().css('width', $('.mosubproducts').height());
     $('#navbackground').css("height", $('.nav-pills').offset().top + $('.nav-pills').height() + 4.5);
-    $('#photogallery').css("margin-top", -($('#photogallery').offset().top - $('#navbackground').height()));
+    //$('#photogallery').css "margin-top",(-($('#photogallery').offset().top-$('#navbackground').height()))
+    setphotogalleryoffset();
     if (getParameterByName('login') !== null) {
       if (getParameterByName('login') === 'success') {
         successlogindialog('登陸成功!');
@@ -86,13 +87,6 @@
     $('#newpage').on('click', function(event) {
       newpagedialog();
     });
-    $('#categorycard').on('click', function(event) {
-      if (!$('#categorybody').is(':visible')) {
-        $('#categorybody').show();
-      } else {
-        $('#categorybody').hide();
-      }
-    });
     $('.logoutbtn').on('click', function(event) {
       $.post('logout.php', {
         logout: 'true'
@@ -106,6 +100,12 @@
       });
     });
   });
+
+  this.setphotogalleryoffset = function() {
+    $('#photogallery').offset({
+      top: $('#navbackground').height()
+    });
+  };
 
   this.registerdialog = function() {
     $.confirm({

@@ -19,7 +19,8 @@ $ ->
   $('.mosubproducts').css 'height', $('.moproducts').outerWidth()/3
   $('.mosubproducts').parent().css 'width', $('.mosubproducts').height()
   $('#navbackground').css "height",$('.nav-pills').offset().top+$('.nav-pills').height()+4.5
-  $('#photogallery').css "margin-top",(-($('#photogallery').offset().top-$('#navbackground').height()))
+  #$('#photogallery').css "margin-top",(-($('#photogallery').offset().top-$('#navbackground').height()))
+  setphotogalleryoffset()
   if getParameterByName('login') != null
     if getParameterByName('login') == 'success'
       successlogindialog('登陸成功!')
@@ -67,12 +68,6 @@ $ ->
   $('#newpage').on 'click', (event) ->
     do newpagedialog
     return
-  $('#categorycard').on 'click', (event) ->
-    if !$('#categorybody').is(':visible')
-      $('#categorybody').show()
-    else
-      $('#categorybody').hide()
-    return
   $('.logoutbtn').on 'click', (event) ->
     $.post('logout.php',
       logout: 'true').done (data) ->
@@ -89,6 +84,10 @@ $ ->
           do waitingdialog
         return
     return
+  return
+
+@setphotogalleryoffset = ->
+  $('#photogallery').offset top: $('#navbackground').height()
   return
 
 @registerdialog = ->
