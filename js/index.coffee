@@ -98,6 +98,7 @@ $ ->
     content: '<div class="input-group" style="margin-bottom:10px"><input id="regiuser" type="text" placeholder="用戶名 (至少6位英文或數字)" class="form-control input-login" aria-label="用戶名" /><span class="input-group-addon input-login-addon"><i class="fa fa-user" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regiemail" type="text" placeholder="電子郵件地址" class="form-control input-login" aria-label="電子郵件地址" /><span class="input-group-addon input-login-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regipwd" type="password" placeholder="密碼 (至少6位英文或數字)" class="form-control input-login" aria-label="密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group" style="margin-bottom:10px"><input id="regiconfpwd" type="password" placeholder="確認密碼 (至少6位英文或數字)" class="form-control input-login" aria-label="確認密碼" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><hr/><div class="input-group" style="margin-bottom:10px"><input id="regisurname" type="text" placeholder="姓" class="form-control input-login" aria-label="姓" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div><div class="input-group"><input id="reginame" type="text" placeholder="名" class="form-control input-login" aria-label="名" /><span class="input-group-addon input-login-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span></div>'
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       submitBtn:
         text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
@@ -230,6 +231,7 @@ $ ->
     content: '請點擊"確定"關閉該窗口'
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       closeBtn:
         text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
@@ -244,6 +246,7 @@ successuploaddialog = (msg) ->
     content: msg
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       closeBtn:
         text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
@@ -258,6 +261,7 @@ errordialog = (msg) ->
     content: msg
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       closeBtn:
         text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;關閉'
@@ -272,6 +276,7 @@ errorlogindialog = (msg,action) ->
     content: msg
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       tryAgain:
         text: '<i class="fa fa-repeat" aria-hidden="true"></i>&nbsp;重試'
@@ -294,6 +299,7 @@ newpagedialog = ->
     content: '<div class="input-group"><input id="pagename" type="text" placeholder="請輸入頁面名稱" class="form-control input-login" aria-label="頁面名稱" /><span class="input-group-addon input-login-addon"><i class="fa fa-file-text" aria-hidden="true"></i></span></div>'
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       confirmBtn:
         text: '<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;新增'
@@ -379,6 +385,7 @@ getParameterByName = (name, url) ->
     content: '確認刪除該圖片?'
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       tryAgain:
         text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
@@ -421,6 +428,7 @@ getParameterByName = (name, url) ->
     content: '確認刪除該頁面?'
     typeAnimated: true
     closeIcon: true
+    draggable: true
     buttons:
       tryAgain:
         text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
