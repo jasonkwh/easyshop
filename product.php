@@ -41,11 +41,16 @@ if($_SESSION['mousertype']==1) {
     <link rel="stylesheet" type="text/css" href="css/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/tinymce.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/index.js"></script>
     <script>
+        <?php if($permissiontoedit==1) { ?>
+        tinymce.init({ selector:'#productinfo' });
+        <?php } ?>
+
         $(function(){
             <?php if($permissiontoedit==1) { ?>
             checkCharRemains();
@@ -335,13 +340,18 @@ if(($result) && ($result->num_rows!==0)) {
         <div class="col-md-9">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="margin-bottom:5px">
                         <ul class="nav nav-pills text-success">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/"><i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;產品詳細</a>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;&nbsp;用戶評價</a></li>
                         </ul>
+                    </div>
+                    <div class="col-12">
+                        <?php if($permissiontoedit==1) { ?>
+                        <textarea id="productinfo"></textarea>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="row">
