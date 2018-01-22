@@ -48,7 +48,57 @@ if($_SESSION['mousertype']==1) {
     <script src="js/index.js"></script>
     <script>
         <?php if($permissiontoedit==1) { ?>
-        tinymce.init({ selector:'#productinfo' });
+        tinymce.init({height: 409,
+            selector: "#productinfo",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking code fullscreen",
+                "insertdatetime media table contextmenu paste directionality textcolor emoticons"
+            ],
+            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+            toolbar2: "image | media | link unlink anchor | print preview code | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
+            image_advtab: true,
+            entity_encoding: 'raw',
+            valid_children : "+body[style]",
+            paste_auto_cleanup_on_paste : true,
+            paste_postprocess : function(pl, o) {
+                // remove &nbsp
+                o.node.innerHTML = o.node.innerHTML.replace(/&nbsp;/ig, "");
+            },
+            extended_valid_elements : "img[class|id|src|border|alt|title|tabindex|hspace|vspace|width|height|align|style|onmouseover|onmousedown|onmouseup|onmouseout|onclick|name|onerror]",
+            style_formats: [
+                {title: "Headers", items: [
+                    {title: "Header 1", format: "h1"},
+                    {title: "Header 2", format: "h2"},
+                    {title: "Header 3", format: "h3"},
+                    {title: "Header 4", format: "h4"},
+                    {title: "Header 5", format: "h5"},
+                    {title: "Header 6", format: "h6"}
+                ]},
+                {title: "Inline", items: [
+                    {title: "Bold", icon: "bold", format: "bold"},
+                    {title: "Italic", icon: "italic", format: "italic"},
+                    {title: "Underline", icon: "underline", format: "underline"},
+                    {title: "Strikethrough", icon: "strikethrough", format: "strikethrough"},
+                    {title: "Superscript", icon: "superscript", format: "superscript"},
+                    {title: "Subscript", icon: "subscript", format: "subscript"},
+                    {title: "Code", icon: "code", format: "code"}
+                ]},
+                {title: "Blocks", items: [
+                    {title: "Paragraph", format: "p"},
+                    {title: "Blockquote", format: "blockquote"},
+                    {title: "Div", format: "div"},
+                    {title: "Pre", format: "pre"}
+                ]},
+                {title: "Alignment", items: [
+                    {title: "Left", icon: "alignleft", format: "alignleft"},
+                    {title: "Center", icon: "aligncenter", format: "aligncenter"},
+                    {title: "Right", icon: "alignright", format: "alignright"},
+                    {title: "Justify", icon: "alignjustify", format: "alignjustify"}
+                ]},
+                {title: "Normal", format: "p"}
+            ]
+        });
         <?php } ?>
 
         $(function(){
