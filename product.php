@@ -55,12 +55,13 @@ if($_SESSION['mousertype']==1) {
                 "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking code fullscreen",
                 "insertdatetime media table contextmenu paste directionality textcolor emoticons"
             ],
-            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
-            toolbar2: "image | media | link unlink anchor | print preview code | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
+            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print savebutton preview code",
+            toolbar2: "image | media | link unlink anchor | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
             image_advtab: true,
             entity_encoding: 'raw',
             valid_children : "+body[style]",
             paste_auto_cleanup_on_paste : true,
+            branding: false,
             paste_postprocess : function(pl, o) {
                 // remove &nbsp
                 o.node.innerHTML = o.node.innerHTML.replace(/&nbsp;/ig, "");
@@ -97,9 +98,29 @@ if($_SESSION['mousertype']==1) {
                     {title: "Justify", icon: "alignjustify", format: "alignjustify"}
                 ]},
                 {title: "Normal", format: "p"}
-            ]
+            ],
+            setup: function(editor) {
+                editor.addButton('savebutton', {
+                    tooltip: 'Save Content',
+                    icon: 'save',
+                    onclick: function () {
+                        savedesccontent();
+                    }
+                });
+                editor.addMenuItem('myitem', {
+                    text: 'Save',
+                    context: 'file',
+                    onclick: function() {
+                        savedesccontent();
+                    }
+                });
+            }
         });
         <?php } ?>
+
+        function savedesccontent() {
+            alert("test");
+        }
 
         $(function(){
             <?php if($permissiontoedit==1) { ?>
