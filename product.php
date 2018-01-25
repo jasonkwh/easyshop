@@ -55,7 +55,7 @@ if($_SESSION['mousertype']==1) {
                 "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking code fullscreen",
                 "insertdatetime media table contextmenu paste directionality textcolor emoticons"
             ],
-            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print savebutton preview code",
+            toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | savebutton print preview code",
             toolbar2: "image | media | link unlink anchor | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
             image_advtab: true,
             entity_encoding: 'raw',
@@ -288,7 +288,8 @@ if($_SESSION['mousertype']==1) {
                 productid: <?php echo $_REQUEST['id']; ?>,
                 productname: $('#moproductname').val(),
                 productshortdesc: $('#shortdescedit').val(),
-                productprice: $('#pricechanger').val()
+                productprice: $('#pricechanger').val(),
+                productlongdesc: $('#productinfo').val()
             }).done(function(data) {
                 console.log(data)
                 if (data === "success") {
