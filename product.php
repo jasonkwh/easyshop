@@ -8,6 +8,7 @@ $query = "select * from moproducts where Id=" . $_REQUEST['id'];
 $result = $mysqli->query($query);
 $productname = "商品名稱";
 $descriptions = "此處為商品介紹 (限300英文字)";
+$productinfo = "";
 $producttitle = '';
 $price = "";
 if(($result) && ($result->num_rows!==0)) {
@@ -16,6 +17,7 @@ if(($result) && ($result->num_rows!==0)) {
     $productname = $row['Name'];
     $descriptions = $row['Descriptions'];
     $price = $row['Price'];
+    $productinfo = $row['ProductInfo'];
 }
 if($_SESSION['mousertype']==1) {
     $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
@@ -289,7 +291,7 @@ if($_SESSION['mousertype']==1) {
                 productname: $('#moproductname').val(),
                 productshortdesc: $('#shortdescedit').val(),
                 productprice: $('#pricechanger').val(),
-                productlongdesc: $('#productinfo').val()
+                productlongdesc: tinyMCE.activeEditor.getContent()
             }).done(function(data) {
                 console.log(data)
                 if (data === "success") {
@@ -422,8 +424,10 @@ if(($result) && ($result->num_rows!==0)) {
                     </div>
                     <div class="col-12">
                         <?php if($permissiontoedit==1) { ?>
-                        <textarea id="productinfo"></textarea>
-                        <?php } ?>
+                        <textarea id="productinfo"><?php echo $productinfo; ?></textarea>
+                        <?php } else {
+                            echo $productinfo;
+                        } ?>
                     </div>
                 </div>
                 <div class="row">
