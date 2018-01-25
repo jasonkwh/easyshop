@@ -112,17 +112,27 @@ if($_SESSION['mousertype']==1) {
                 editor.addMenuItem('myitem', {
                     text: 'Save',
                     context: 'file',
+                    icon: 'save',
                     onclick: function() {
                         savedesccontent();
                     }
                 });
             }
         });
-        <?php } ?>
 
         function savedesccontent() {
-            alert("test");
+            $.post('saveproductinfo.php', {
+                productid: <?php echo $_REQUEST['id']; ?>,
+                productname: $('#moproductname').val(),
+                productlongdesc: tinyMCE.activeEditor.getContent()
+            }).done(function(data) {
+                console.log(data)
+                if (data === "success") {
+                    successlogindialog("內容已儲存!")
+                }
+            });
         }
+        <?php } ?>
 
         $(function(){
             <?php if($permissiontoedit==1) { ?>
