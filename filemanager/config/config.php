@@ -1,6 +1,6 @@
 <?php
 $version = "9.12.1";
-//require_once('../../userstatus.php');
+require_once('../userstatus.php');
 
 mb_internal_encoding('UTF-8');
 mb_http_output('UTF-8');
@@ -54,12 +54,9 @@ define('DEBUG_ERROR_MESSAGE', true); // TRUE or FALSE
 |    |   |   |   |- responsivefilemanager
 |    |   |   |   |   |- plugin.min.js
 */
-$upload_dir = '/source/';
-//$upload_dir = '/source/' . $_SESSION['momerchantid'] . '/'; // path from base_url to base of upload folder (with start and final /)
-$current_path = '../source/';
-//$current_path = '../source/' . $_SESSION['momerchantid'] . '/'; // relative path from filemanager folder to upload folder (with final /)
-$thumbs_base_path = '../thumbs/';
-//$thumbs_base_path = '../thumbs/' . $_SESSION['momerchantid'] . '/'; // relative path from filemanager folder to thumbs folder (with final /)
+$upload_dir = '/source/' . $_SESSION['momerchantid'] . '/'; // path from base_url to base of upload folder (with start and final /)
+$current_path = '../source/' . $_SESSION['momerchantid'] . '/'; // relative path from filemanager folder to upload folder (with final /)
+$thumbs_base_path = '../thumbs/' . $_SESSION['momerchantid'] . '/'; // relative path from filemanager folder to thumbs folder (with final /)
 
 if (!file_exists($current_path))
     mkdir($current_path, 0777, true);
