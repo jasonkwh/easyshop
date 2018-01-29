@@ -55,11 +55,14 @@ if($_SESSION['mousertype']==1) {
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking code fullscreen",
-                "insertdatetime media table contextmenu paste directionality textcolor emoticons"
+                "insertdatetime media table contextmenu paste directionality textcolor emoticons responsivefilemanager"
             ],
             toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | savebutton print preview code",
-            toolbar2: "image | media | link unlink anchor | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
+            toolbar2: "responsivefilemanager image media | link unlink anchor | youtube | qrcode | flickr | picasa | colorpicker forecolor backcolor | fontselect,fontsizeselect,formatselect",
             image_advtab: true,
+            external_filemanager_path:"/filemanager/",
+            filemanager_title:"File manager",
+            external_plugins: { "filemanager" : "/filemanager/plugin.min.js" },
             entity_encoding: 'raw',
             valid_children : "+body[style]",
             paste_auto_cleanup_on_paste : true,
