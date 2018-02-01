@@ -50,7 +50,7 @@ if (strpos($subdir_path,'../') === FALSE
 	&& strpos($subdir_path,'..\\') === FALSE
 	&& strpos($subdir_path,'.\\') === FALSE)
 {
-	$subdir = $subdir_path ."/";
+	$subdir = strip_tags($subdir_path) ."/";
 	$_SESSION['RF']["filter"]='';
 }
 else { $subdir = ''; }
