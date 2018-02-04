@@ -121,3 +121,7 @@ body {
 .grow:hover { transform: scale(1.05);z-index:10; }
 .grow-sm { transition: all .3s ease-in-out;z-index:0; }
 .grow-sm:hover { transform: scale(1.4);z-index:10; }
+.page-item { font-size:13px!important }
+.pagination > li > a, .pagination > li > span{color:#28a745!important;}
+.pagination > li.disabled > a, .pagination > li.disabled > span{color:#868e96!important;}
+.pagination > li.active > a, .pagination > li.active > span{color:#fff!important;background-color:#28a745!important;border-color:#28a745!important;}

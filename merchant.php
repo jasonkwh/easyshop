@@ -22,17 +22,33 @@ if($_SESSION['mousertype']==1) {
     <title>Demo</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/jquery-confirm.min.css">
     <link rel="stylesheet" type="text/css" href="css/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap4.min.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/index.js"></script>
     <script>
         $(function(){
             $('[data-toggle="tooltip"]').tooltip();
+            $('#latestproducttable').DataTable({
+                "lengthChange": false,
+                "info": false,
+                "ordering": false,
+                "pageLength": 2,
+                "language": {
+                    "paginate": {
+                        "previous": "上一頁",
+                        "next": "下一頁"
+                    }
+                }
+            });
+            $('#latestproducttable_filter').remove();
             $( ".dropdown" ).mouseover(function() {
                 <?php
                 $pageshtml = '';
@@ -155,12 +171,49 @@ if(($result) && ($result->num_rows!==0)) {
         <div class="col-12 col-md-6" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
-                    <div class="col-12">
+                    <div class="col-12" style="margin-bottom:5px">
                         <ul class="nav nav-pills text-success">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;最新商品</a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="col-12">
+                        <table id="latestproducttable">
+                            <thead>
+                            <tr><th></th><th></th><th></th><th></th></tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $imgarray = array();
+                            $query = "select prod.Id,img.FileUrl from moproductimgs img inner join moproducts prod on img.ProductId=prod.Id and prod.Edited=1 and prod.TrashedDate is null and prod.MerchantId=" . $_REQUEST['id'] . " where img.selected=1 and img.TrashedDate is null order by Id asc";
+                            $result = $mysqli->query($query);
+                            if(($result) && ($result->num_rows!==0)) {
+                                while($row=$result->fetch_assoc()) {
+                                    $imgarray[$row['Id']] = $row['FileUrl'];
+                                }
+                            }
+                            $query = "select * from moproducts where MerchantId=" . $_REQUEST['id'] . " and Edited=1 order by CreatedDate asc limit 48";
+                            $result = $mysqli->query($query);
+                            if(($result) && ($result->num_rows!==0)) {
+                                $count=0;
+                                echo "<tr>";
+                                while($row=$result->fetch_assoc()) {
+                                    if($count==4) {
+                                        echo "</tr><tr>";
+                                        $count=0;
+                                    }
+                                    echo "<td>haha</td>";
+                                    $count++;
+                                }
+                                for($i=$count;$i<4;$i++) {
+                                    echo "<td></td>";
+                                }
+                                echo "</tr>";
+                            }
+                            ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="row">
