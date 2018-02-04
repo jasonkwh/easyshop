@@ -178,7 +178,7 @@ if(($result) && ($result->num_rows!==0)) {
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" style="margin-bottom:-20px">
                         <table id="latestproducttable">
                             <thead>
                             <tr><th></th><th></th><th></th><th></th></tr>
@@ -225,16 +225,16 @@ if(($result) && ($result->num_rows!==0)) {
         <div class="col-12 col-md-6" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
-                    <div class="col-12">
+                    <div class="col-12" style="margin-bottom:5px">
                         <ul class="nav nav-pills text-success">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;每週熱賣</a>
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="row">
-
+                    <div class="col-12" style="margin-bottom:-20px">
+                        
+                    </div>
                 </div>
             </div>
         </div>
