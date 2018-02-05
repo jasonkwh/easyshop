@@ -91,6 +91,10 @@ if($_SESSION['mousertype']==1) {
             });
         });
 
+        function searchnewproduct() {
+            $('#latestproducttable').dataTable().fnFilter($("#searchnewproducts").val());
+        }
+
         function selectthis(e) {
             var selecteditem = e.attr('id').split('_')[1];
             $.post('newpage.php', {
@@ -171,12 +175,15 @@ if(($result) && ($result->num_rows!==0)) {
         <div class="col-12 col-md-6" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
-                    <div class="col-12" style="margin-bottom:5px">
+                    <div class="col-6" style="margin-bottom:5px">
                         <ul class="nav nav-pills text-success">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;最新商品</a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="col-6" style="margin-bottom:5px">
+                        <div class="input-group" style="margin-bottom:10px;width:200px;float:right"><input id="searchnewproducts" placeholder="搜索商品" class="form-control input-login" aria-label="搜索商品" onkeyup="searchnewproduct()" type="text"><span class="input-group-addon input-login-addon"><i class="fa fa-search" aria-hidden="true"></i></span></div>
                     </div>
                     <div class="col-12" style="margin-bottom:-20px">
                         <table id="latestproducttable">
