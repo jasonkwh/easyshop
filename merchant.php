@@ -210,7 +210,7 @@ if(($result) && ($result->num_rows!==0)) {
                                         echo "</tr><tr>";
                                         $count=0;
                                     }
-                                    echo "<td><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . "' style='width: 136px; height: 104.5px;' class='img-fluid img-thumbnail'></div><div class='row'></div><div class='row'></div><div class='row'></div></td>";
+                                    echo "<td><div class='row' style='margin-left:auto;margin-right:auto'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px; height: 104.5px;' class='img-fluid img-thumbnail'><p style='margin-left:auto;margin-right:auto;font-size:13px;color:#868e96'>" . $row['Name'] . "</p></div></td>";
                                     $count++;
                                 }
                                 for($i=$count;$i<4;$i++) {
