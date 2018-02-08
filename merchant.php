@@ -186,9 +186,9 @@ if(($result) && ($result->num_rows!==0)) {
                         <div class="input-group" style="margin-bottom:10px;width:200px;float:right"><input id="searchnewproducts" placeholder="搜索商品" class="form-control input-login" aria-label="搜索商品" onkeyup="searchnewproduct()" type="text"><span class="input-group-addon input-login-addon"><i class="fa fa-search" aria-hidden="true"></i></span></div>
                     </div>
                     <div class="col-12" style="margin-bottom:-20px">
-                        <table id="latestproducttable">
+                        <table id="latestproducttable" style="margin-left:-2.5%;width:105%">
                             <thead>
-                            <tr><th></th><th></th><th></th><th></th></tr>
+                            <tr><th style="width:25%"></th><th style="width:25%"></th><th style="width:25%"></th><th style="width:25%"></th></tr>
                             </thead>
                             <tbody>
                             <?php
@@ -210,7 +210,7 @@ if(($result) && ($result->num_rows!==0)) {
                                         echo "</tr><tr>";
                                         $count=0;
                                     }
-                                    echo "<td>haha</td>";
+                                    echo "<td><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . "' style='width: 136px; height: 104.5px;' class='img-fluid img-thumbnail'></div><div class='row'></div><div class='row'></div><div class='row'></div></td>";
                                     $count++;
                                 }
                                 for($i=$count;$i<4;$i++) {
