@@ -33,6 +33,19 @@ if($_SESSION['mousertype']==1) {
     <script src="js/dataTables.bootstrap4.min.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/index.js"></script>
+    <style>
+        .products {
+            padding-top:7px;
+            padding-bottom:10px;
+        }
+        .products:hover {
+            background-color:#ecf0f1;
+            border-radius:5px;
+        }
+        .products:hover a{
+            text-decoration:none;
+        }
+    </style>
     <script>
         $(function(){
             $('[data-toggle="tooltip"]').tooltip();
@@ -172,7 +185,7 @@ if(($result) && ($result->num_rows!==0)) {
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-6" style="margin-bottom:15px">
+        <div class="col-12 col-md-8" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
                     <div class="col-6" style="margin-bottom:5px">
@@ -210,7 +223,7 @@ if(($result) && ($result->num_rows!==0)) {
                                         echo "</tr><tr>";
                                         $count=0;
                                     }
-                                    echo "<td><div class='row' style='margin-left:auto;margin-right:auto'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px; height: 104.5px;' class='img-fluid img-thumbnail'><p style='margin-left:auto;margin-right:auto;font-size:13px;color:#868e96'>" . $row['Name'] . "</p></div></td>";
+                                    echo "<td class='products'><a href='product.php?id=" . $row['Id'] . "'><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px;height:104.5px;margin-left:auto;margin-right:auto' class='img-fluid img-thumbnail'><p style='font-size:13px;color:#868e96;margin:5px auto -5px auto;'>" . $row['Name'] . "</p></div></td>";
                                     $count++;
                                 }
                                 for($i=$count;$i<4;$i++) {
@@ -229,7 +242,7 @@ if(($result) && ($result->num_rows!==0)) {
             </div>
         </div>
 
-        <div class="col-12 col-md-6" style="margin-bottom:15px">
+        <div class="col-12 col-md-4" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
                     <div class="col-12" style="margin-bottom:5px">
