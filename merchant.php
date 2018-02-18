@@ -61,7 +61,20 @@ if($_SESSION['mousertype']==1) {
                     }
                 }
             });
+            $('#topsaletable').DataTable({
+                "lengthChange": false,
+                "info": false,
+                "ordering": false,
+                "pageLength": 2,
+                "language": {
+                    "paginate": {
+                        "previous": "上一頁",
+                        "next": "下一頁"
+                    }
+                }
+            });
             $('#latestproducttable_filter').remove();
+            $('#topsaletable_filter').remove();
             $( ".dropdown" ).mouseover(function() {
                 <?php
                 $pageshtml = '';
@@ -106,6 +119,10 @@ if($_SESSION['mousertype']==1) {
 
         function searchnewproduct() {
             $('#latestproducttable').dataTable().fnFilter($("#searchnewproducts").val());
+        }
+
+        function searchtopsale() {
+            $('#topsaletable').dataTable().fnFilter($("#searchtopsale").val());
         }
 
         function selectthis(e) {
@@ -223,7 +240,7 @@ if(($result) && ($result->num_rows!==0)) {
                                         echo "</tr><tr>";
                                         $count=0;
                                     }
-                                    echo "<td class='products'><a href='product.php?id=" . $row['Id'] . "'><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px;height:104.5px;margin-left:auto;margin-right:auto' class='img-fluid img-thumbnail'><p style='font-size:13px;color:#868e96;margin:5px auto -5px auto;'>" . $row['Name'] . "</p></div></td>";
+                                    echo "<td class='products'><a href='product.php?id=" . $row['Id'] . "'><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px;height:104.5px;margin-left:auto;margin-right:auto' class='img-fluid img-thumbnail'></div><div class='row'><p style='font-size:13px;color:#868e96;margin:5px auto -5px auto;'>" . $row['Name'] . "</p></div></td>";
                                     $count++;
                                 }
                                 for($i=$count;$i<4;$i++) {
@@ -236,24 +253,39 @@ if(($result) && ($result->num_rows!==0)) {
                         </table>
                     </div>
                 </div>
-                <div class="row">
-
-                </div>
             </div>
         </div>
 
         <div class="col-12 col-md-4" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
-                    <div class="col-12" style="margin-bottom:5px">
+                    <div class="col-6" style="margin-bottom:5px">
                         <ul class="nav nav-pills text-success">
                             <li class="nav-item">
                                 <a class="nav-link active" href="/"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;&nbsp;每週熱賣</a>
                             </li>
                         </ul>
                     </div>
+                    <div class="col-6" style="margin-bottom:5px">
+                        <div class="input-group" style="margin-bottom:10px;width:200px;float:right"><input id="searchtopsale" placeholder="搜索商品" class="form-control input-login" aria-label="搜索商品" onkeyup="searchtopsale()" type="text"><span class="input-group-addon input-login-addon"><i class="fa fa-search" aria-hidden="true"></i></span></div>
+                    </div>
                     <div class="col-12" style="margin-bottom:-20px">
-                        
+                        <table id="topsaletable" style="margin-left:-2.5%;width:105%">
+                            <thead>
+                            <tr><th style="width:100%"></th></tr>
+                            </thead>
+                            <tbody>
+                        <?php
+                        $query = "select * from moproducts where MerchantId=" . $_REQUEST['id'] . " and Edited=1 order by Sold desc limit 10";
+                        $result = $mysqli->query($query);
+                        if(($result) && ($result->num_rows!==0)) {
+                            while($row=$result->fetch_assoc()) {
+                                echo "<tr><td class='products'><a href='product.php?id=" . $row['Id'] . "'><div class='row'><img src='" . $imgarray[$row['Id']] . "' alt='' data-toggle='tooltip' data-placement='bottom' data-original-title='" . $row['Name'] . " MOP$" . $row['Price'] . "' style='width: 136px;height:104.5px;margin-left:auto;margin-right:auto' class='img-fluid img-thumbnail'></div><div class='row'><p style='font-size:13px;color:#868e96;margin:5px auto -5px auto;'>" . $row['Name'] . "</p></div></div></td></tr>";
+                            }
+                        }
+                        ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
