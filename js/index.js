@@ -563,6 +563,17 @@
     obj.parent().parent().html('<div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div>');
   };
 
+  this.savenewcategory = function() {
+    $.post('newpage.php', {
+      newcategory: 1,
+      newcategoryname: $('#newcategoryname').val()
+    }).done(function(data) {
+      if (data === "success") {
+        console.log("need to fix this");
+      }
+    });
+  };
+
   getquerystringid = function() {
     var final_id, id_check, match, url;
     final_id = 0;

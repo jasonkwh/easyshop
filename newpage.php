@@ -178,6 +178,13 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['newcategory']) && isset($_POST['newcategoryname'])) {
+        $query = "insert into mocategories (Name) values ('" . $mysqli->real_escape_string($_POST['newcategoryname']) . "')";
+        if($mysqli->query($query)===TRUE) {
+            $output = "success";
+        } else {
+            $output = "failed";
+        }
     } else {
         $output = "failed";
     }
