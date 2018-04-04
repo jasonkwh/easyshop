@@ -98,8 +98,9 @@ if($_SESSION['mousertype']==2) {
             <div id="categorycard" class="card" style="border-style:none">
                 <p class="card-header" style="height:40px;background-color:#218838;color:#fff;font-size:13px;border-style:none"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;全部商品分類</p>
                 <div id="categorybody" class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px">
-                    <div class="row" style="margin-left:0"><strong>测试</strong></div>
-                    <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
+                    <span>
+                    <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div><?php } ?>
+                    </span>
                 </div>
             </div>
         </div>
@@ -226,8 +227,9 @@ if($_SESSION['mousertype']==2) {
                 </button>
             </div>
             <div class="modal-body" style="background-color:#28a745;border-bottom-left-radius:3px">
-                <div class="row" style="margin-left:0"><strong>测试</strong></div>
-                <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong></div><?php } ?>
+                <span>
+                <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div><?php } ?>
+                </span>
             </div>
         </div>
     </div>

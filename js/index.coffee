@@ -495,6 +495,14 @@ getParameterByName = (name, url) ->
     return
   return
 
+@newcategory = (obj) ->
+  obj.parent().parent().html '<div class="row" style="margin-left:0"><input type="text" name="newcategoryname" id="newcategoryname" placeholder="輸入名稱"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="cancelnewcategory($(this))" style="margin-left:5px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:3px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button></div>'
+  return
+
+@cancelnewcategory = (obj) ->
+  obj.parent().parent().html '<div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div>'
+  return
+
 getquerystringid = ->
   final_id = 0
   url = document.URL
