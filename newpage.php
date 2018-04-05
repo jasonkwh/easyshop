@@ -185,6 +185,13 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['trashcategory']) && isset($_POST['categoryid'])) {
+        $query = "update mocategories set TrashedDate=NOW() where Id=" . $_POST['categoryid'];
+        if($mysqli->query($query)===TRUE) {
+            $output = "success";
+        } else {
+            $output = "failed";
+        }
     } else {
         $output = "failed";
     }

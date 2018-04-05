@@ -572,10 +572,50 @@
         newcategoryname: $('#newcategoryname').val()
       }).done(function(data) {
         if (data === "success") {
-          console.log("need to fix this");
+          setTimeout((function() {
+            location.href = [location.protocol, '//', location.host, location.pathname].join('') + '?id=' + getquerystringid();
+          }), 500);
+          waitingdialog();
         }
       });
     }
+  };
+
+  this.trashcategory = function(categoryid) {
+    $.confirm({
+      icon: 'fa fa-warning',
+      title: '刪除確認',
+      content: '確認刪除該類別?',
+      typeAnimated: true,
+      closeIcon: true,
+      draggable: true,
+      buttons: {
+        tryAgain: {
+          text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定',
+          btnClass: 'btn btn-danger btn-nav btn-error',
+          action: function() {
+            return $.post('newpage.php', {
+              trashcategory: 1,
+              categoryid: categoryid
+            }).done(function(data) {
+              if (data === "success") {
+                setTimeout((function() {
+                  location.href = [location.protocol, '//', location.host, location.pathname].join('') + '?id=' + getquerystringid();
+                }), 500);
+                waitingdialog();
+              } else {
+                errordialog('類別刪除失敗');
+              }
+            });
+          }
+        },
+        closeBtn: {
+          text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;取消',
+          btnClass: 'btn btn-outline-danger btn-nav btn-error btn-error-cancel',
+          action: function() {}
+        }
+      }
+    });
   };
 
   getquerystringid = function() {

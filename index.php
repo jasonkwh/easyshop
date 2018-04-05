@@ -8,13 +8,13 @@ if($_SESSION['mousertype']==2) {
 }
 
 $categories = "";
-$query = "select Name from mocategories where TrashedDate is null order by Name asc";
+$query = "select * from mocategories where TrashedDate is null order by Name asc";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
         $categories .= '<div class="row" style="margin-left:0;margin-bottom:5px"><strong><h6>' . $row['Name'] . '</h6></strong>';
         if($permissiontoedit==1) {
-            $categories .= '<button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;margin-top:-7px;width:30px;height:30px;background-color:#ffc800!important"><i class="fa fa-pencil" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:3px;margin-top:-7px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button>';
+            $categories .= '<button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;margin-top:-7px;width:30px;height:30px;background-color:#ffc800!important"><i class="fa fa-pencil" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="trashcategory(' . $row['Id'] . ')" style="margin-left:3px;margin-top:-7px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button>';
         }
         $categories .= '</div>';
     }

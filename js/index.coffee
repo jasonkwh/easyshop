@@ -511,8 +511,53 @@ getParameterByName = (name, url) ->
       newcategory: 1
       newcategoryname: $('#newcategoryname').val()).done (data) ->
         if data == "success"
-          console.log "need to fix this"
+          setTimeout (->
+              location.href = [
+                location.protocol
+                '//'
+                location.host
+                location.pathname
+              ].join('') + '?id=' + getquerystringid()
+              return
+            ), 500
+          do waitingdialog
         return
+  return
+
+@trashcategory = (categoryid) ->
+  $.confirm
+    icon: 'fa fa-warning'
+    title: '刪除確認'
+    content: '確認刪除該類別?'
+    typeAnimated: true
+    closeIcon: true
+    draggable: true
+    buttons:
+      tryAgain:
+        text: '<i class="fa fa-check" aria-hidden="true"></i>&nbsp;確定'
+        btnClass: 'btn btn-danger btn-nav btn-error'
+        action: ->
+          $.post('newpage.php',
+            trashcategory: 1
+            categoryid: categoryid).done (data) ->
+              if data == "success"
+                setTimeout (->
+                  location.href = [
+                    location.protocol
+                    '//'
+                    location.host
+                    location.pathname
+                  ].join('') + '?id=' + getquerystringid()
+                  return
+                ), 500
+                do waitingdialog
+              else
+                errordialog('類別刪除失敗')
+              return
+      closeBtn:
+        text: '<i class="fa fa-times" aria-hidden="true"></i>&nbsp;取消'
+        btnClass: 'btn btn-outline-danger btn-nav btn-error btn-error-cancel'
+        action:->
   return
 
 getquerystringid = ->
