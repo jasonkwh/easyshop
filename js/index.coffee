@@ -496,7 +496,7 @@ getParameterByName = (name, url) ->
   return
 
 @newcategory = (obj) ->
-  obj.parent().parent().html '<div class="row" style="margin-left:0"><input type="text" name="newcategoryname" id="newcategoryname" placeholder="輸入名稱"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="cancelnewcategory($(this))" style="margin-left:5px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:3px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button></div>'
+  obj.parent().parent().html '<div class="row" style="margin-left:0"><input type="text" name="newcategoryname" id="newcategoryname" placeholder="輸入名稱"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savenewcategory()" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="cancelnewcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div>'
   return
 
 @cancelnewcategory = (obj) ->
@@ -504,12 +504,15 @@ getParameterByName = (name, url) ->
   return
 
 @savenewcategory = ->
-  $.post('newpage.php',
-    newcategory: 1
-    newcategoryname: $('#newcategoryname').val()).done (data) ->
-      if data == "success"
-        console.log "need to fix this"
-      return
+  if ($('#newcategoryname').val() == null) or ($('#newcategoryname').val() == "")
+    errordialog "請輸入類別名稱。"
+  else
+    $.post('newpage.php',
+      newcategory: 1
+      newcategoryname: $('#newcategoryname').val()).done (data) ->
+        if data == "success"
+          console.log "need to fix this"
+        return
   return
 
 getquerystringid = ->

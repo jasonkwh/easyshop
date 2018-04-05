@@ -1,0 +1,2 @@
+<?php echo $categories; ?>
+<span><?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div><?php } ?></span>

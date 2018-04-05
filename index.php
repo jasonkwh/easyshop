@@ -6,6 +6,19 @@ $permissiontoedit = 0;
 if($_SESSION['mousertype']==2) {
     $permissiontoedit = 1;
 }
+
+$categories = "";
+$query = "select Name from mocategories where TrashedDate is null order by Name asc";
+$result = $mysqli->query($query);
+if(($result) && ($result->num_rows!==0)) {
+    while($row=$result->fetch_assoc()) {
+        $categories .= '<div class="row" style="margin-left:0;margin-bottom:5px"><strong><h6>' . $row['Name'] . '</h6></strong>';
+        if($permissiontoedit==1) {
+            $categories .= '<button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;margin-top:-7px;width:30px;height:30px;background-color:#ffc800!important"><i class="fa fa-pencil" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:3px;margin-top:-7px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button>';
+        }
+        $categories .= '</div>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hant">
@@ -98,9 +111,7 @@ if($_SESSION['mousertype']==2) {
             <div id="categorycard" class="card" style="border-style:none">
                 <p class="card-header" style="height:40px;background-color:#218838;color:#fff;font-size:13px;border-style:none"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;全部商品分類</p>
                 <div id="categorybody" class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px">
-                    <span>
-                    <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div><?php } ?>
-                    </span>
+                    <?php require_once('categoriescard.php'); ?>
                 </div>
             </div>
         </div>
@@ -227,9 +238,7 @@ if($_SESSION['mousertype']==2) {
                 </button>
             </div>
             <div class="modal-body" style="background-color:#28a745;border-bottom-left-radius:3px">
-                <span>
-                <?php if($permissiontoedit==1) { ?><div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div><?php } ?>
-                </span>
+                <?php require_once('categoriescard.php'); ?>
             </div>
         </div>
     </div>
