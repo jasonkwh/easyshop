@@ -496,16 +496,16 @@ getParameterByName = (name, url) ->
   return
 
 @newcategory = (obj) ->
-  obj.parent().parent().html '<div class="row" style="margin-left:0"><input type="text" name="newcategoryname" id="newcategoryname" placeholder="輸入名稱"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savenewcategory()" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="cancelnewcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div>'
+  obj.parent().parent().html '<div class="row" style="margin-left:0;margin-top:5px"><input type="text" name="newcategoryname" id="newcategoryname" placeholder="輸入名稱"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savenewcategory()" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="cancelnewcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div>'
   return
 
 @cancelnewcategory = (obj) ->
-  obj.parent().parent().html '<div class="row" style="margin-left:0;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div>'
+  obj.parent().parent().html '<div class="row" style="margin-left:0;margin-top:5px;background-color:#28873c;padding:5px 5px 5px 8px;width:84px;height:30px;border-radius:5px"><i class="fa fa-plus-circle" aria-hidden="true" style="margin-top:3px"></i>&nbsp;<a href="#" onclick="newcategory($(this))" style="color:#fff">新的類別</a></div>'
   return
 
 @savenewcategory = ->
   if ($('#newcategoryname').val() == null) or ($('#newcategoryname').val() == "")
-    errordialog "請輸入類別名稱。"
+    errordialog "請輸入類別名稱"
   else
     $.post('newpage.php',
       newcategory: 1
@@ -522,6 +522,38 @@ getParameterByName = (name, url) ->
             ), 500
           do waitingdialog
         return
+  return
+
+@saveeditedcategory = (categoryid,obj) ->
+  if (obj.parent().find('.editcategoryfield').val() == null) or (obj.parent().find('.editcategoryfield').val() == "")
+    errordialog "請輸入類別名稱"
+  else
+    $.post('newpage.php',
+      saveeditcategory: 1
+      categoryid: categoryid
+      categoryname: obj.parent().find('.editcategoryfield').val()).done (data) ->
+        if data == "success"
+          setTimeout (->
+            location.href = [
+              location.protocol
+              '//'
+              location.host
+              location.pathname
+            ].join('') + '?id=' + getquerystringid()
+            return
+          ), 500
+          do waitingdialog
+        return
+  return
+
+@editcategory = (categoryid,categoryname,obj) ->
+  categoryhtml = encodeURIComponent(obj.parent().parent().html())
+  obj.parent().parent().html '<div class="row" style="margin-left:0;margin-top:-5px"><input type="hidden" class="categoryhtml" value="' + categoryhtml + '"><input type="text" class="editcategoryfield" placeholder="輸入名稱" value="' + categoryname + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="saveeditedcategory(' + categoryid + ',$(this))" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="canceleditcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div>'
+  return
+
+@canceleditcategory = (obj)->
+  categoryhtml = decodeURIComponent(obj.parent().find('.categoryhtml').val())
+  obj.parent().parent().html categoryhtml
   return
 
 @trashcategory = (categoryid) ->

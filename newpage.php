@@ -192,6 +192,13 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['saveeditcategory']) && isset($_POST['categoryid']) && isset($_POST['categoryname'])) {
+        $query = "update mocategories set Name='" . $mysqli->real_escape_string($_POST['categoryname']) . "' where Id=" . $_POST['categoryid'];
+        if($mysqli->query($query)===TRUE) {
+            $output = "success";
+        } else {
+            $output = "failed";
+        }
     } else {
         $output = "failed";
     }
