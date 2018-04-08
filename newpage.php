@@ -179,7 +179,7 @@ if($loggedin==1) {
             $output = "failed";
         }
     } else if(isset($_POST['newcategory']) && isset($_POST['newcategoryname'])) {
-        $query = "insert into mocategories (Name) values ('" . $mysqli->real_escape_string($_POST['newcategoryname']) . "')";
+        $query = "insert into mocategories (Name) values ('" . trim($mysqli->real_escape_string($_POST['newcategoryname'])) . "')";
         if($mysqli->query($query)===TRUE) {
             $output = "success";
         } else {
@@ -193,7 +193,7 @@ if($loggedin==1) {
             $output = "failed";
         }
     } else if(isset($_POST['saveeditcategory']) && isset($_POST['categoryid']) && isset($_POST['categoryname'])) {
-        $query = "update mocategories set Name='" . $mysqli->real_escape_string($_POST['categoryname']) . "' where Id=" . $_POST['categoryid'];
+        $query = "update mocategories set Name='" . trim($mysqli->real_escape_string($_POST['categoryname'])) . "' where Id=" . $_POST['categoryid'];
         if($mysqli->query($query)===TRUE) {
             $output = "success";
         } else {

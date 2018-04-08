@@ -601,15 +601,19 @@
   };
 
   this.editcategory = function(categoryid, categoryname, obj) {
-    var categoryhtml;
+    var categoryhtml, subcategories;
+    subcategories = obj.parent().parent().find('.editsubcategoryfield').val();
     categoryhtml = encodeURIComponent(obj.parent().parent().html());
-    obj.parent().parent().html('<div class="row" style="margin-left:0;margin-top:-5px"><input type="hidden" class="categoryhtml" value="' + categoryhtml + '"><input type="text" class="editcategoryfield" placeholder="輸入名稱" value="' + categoryname + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="saveeditedcategory(' + categoryid + ',$(this))" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="canceleditcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div>');
+    obj.parent().parent().html('<div class="row" style="margin-left:0;margin-top:-5px;margin-bottom:2px"><input type="hidden" class="categoryhtml" value="' + categoryhtml + '"><input type="text" class="editcategoryfield" placeholder="輸入名稱" value="' + categoryname + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="saveeditedcategory(' + categoryid + ',$(this))" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="canceleditcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div><div class="row" style="margin-left:0;margin-bottom:20px"><input style="width:160px" type="text" id="subcat' + categoryid + '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' + subcategories + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button></div>');
   };
 
   this.canceleditcategory = function(obj) {
-    var categoryhtml;
+    var categoryhtml, subcategories, subcatid;
+    subcategories = obj.parent().parent().find('.editsubcategoryfield').val();
+    subcatid = obj.parent().parent().find('.editsubcategoryfield').attr('id');
     categoryhtml = decodeURIComponent(obj.parent().find('.categoryhtml').val());
     obj.parent().parent().html(categoryhtml);
+    $('#' + subcatid).val(subcategories);
   };
 
   this.trashcategory = function(categoryid) {
