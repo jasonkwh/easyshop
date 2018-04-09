@@ -552,6 +552,19 @@ getParameterByName = (name, url) ->
   obj.parent().parent().html '<div class="row" style="margin-left:0;margin-top:-5px;margin-bottom:2px"><input type="hidden" class="categoryhtml" value="' + categoryhtml + '"><input type="text" class="editcategoryfield" placeholder="輸入名稱" value="' + categoryname + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="saveeditedcategory(' + categoryid + ',$(this))" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="canceleditcategory($(this))" style="margin-left:3px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button></div><div class="row" style="margin-left:0;margin-bottom:20px"><input style="width:160px" type="text" id="subcat' + categoryid + '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' + subcategories + '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button></div>'
   return
 
+@savesubcategory = (categoryid) ->
+  $.post('newpage.php',
+    savesubcategory: 1
+    categoryid: categoryid
+    subcategories: $('#subcat'+categoryid).val()).done (data) ->
+      if data == "success"
+        $('#subcat'+categoryid).val($('#subcat'+categoryid).val().replace(/，/gi,",").replace(/,\s*$/, ""))
+        successuploaddialog "保存成功"
+      else
+        errordialog "子類別保存失敗"
+      return
+  return
+
 @canceleditcategory = (obj)->
   subcategories = obj.parent().parent().find('.editsubcategoryfield').val()
   subcatid = obj.parent().parent().find('.editsubcategoryfield').attr('id')

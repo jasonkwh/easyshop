@@ -18,7 +18,7 @@ if(($result) && ($result->num_rows!==0)) {
         }
         $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px">';
         if($permissiontoedit==1) {
-            $categories .= '<input style="width:160px" type="text" id="subcat' . $row['Id'] . '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value=""><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button>';
+            $categories .= '<input style="width:160px" type="text" id="subcat' . $row['Id'] . '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' . $row['subcategories'] . '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savesubcategory(' . $row['Id'] . ')" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button>';
         }
         $categories .= '</div></span>';
     }

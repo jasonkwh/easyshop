@@ -199,6 +199,17 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['savesubcategory']) && isset($_POST['categoryid']) && isset($_POST['subcategories'])) {
+        $subcategoriesstr = rtrim(str_replace("，",",",$mysqli->real_escape_string($_POST['subcategories'])),",");
+        $subcategories = explode(",",$subcategoriesstr);
+        $subcategories = array_map('trim',$subcategories);
+        $subcategoriesstr = implode(",",$subcategories);
+        $query = "update mocategories set subcategories='" . $subcategoriesstr . "' where Id=" . $_POST['categoryid'];
+        if($mysqli->query($query)===TRUE) {
+            $output = "success";
+        } else {
+            $output = "failed";
+        }
     } else {
         $output = "failed";
     }
