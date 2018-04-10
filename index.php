@@ -8,17 +8,26 @@ if($_SESSION['mousertype']==2) {
 }
 
 $categories = "";
+$subcategories = array();
+$subcategorieshtml = "";
 $query = "select * from mocategories where TrashedDate is null order by Name asc";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
-        $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6>' . $row['Name'] . '</h6></strong>';
+        $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
         if($permissiontoedit==1) {
             $categories .= '<button type="button" class="btn btn-sm btn-success rounded-circle" onclick="editcategory(' . $row['Id'] . ',\'' . $row['Name'] . '\',$(this))" style="margin-left:5px;margin-top:-7px;width:30px;height:30px;background-color:#ffc800!important"><i class="fa fa-pencil" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="trashcategory(' . $row['Id'] . ')" style="margin-left:3px;margin-top:-7px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button>';
         }
         $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px">';
         if($permissiontoedit==1) {
             $categories .= '<input style="width:160px" type="text" id="subcat' . $row['Id'] . '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' . $row['subcategories'] . '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savesubcategory(' . $row['Id'] . ')" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button>';
+        } else {
+            $subcategorieshtml = "";
+            $subcategories = explode(',',$row['subcategories']);
+            foreach($subcategories as $subcategory) {
+                $subcategorieshtml .= '<a href="#" class="categorieslink">' . $subcategory . '</a>&nbsp;';
+            }
+            $categories .= '<h7>' . $subcategorieshtml . '</h7>';
         }
         $categories .= '</div></span>';
     }
