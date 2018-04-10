@@ -22,12 +22,14 @@ if(($result) && ($result->num_rows!==0)) {
         if($permissiontoedit==1) {
             $categories .= '<input style="width:160px" type="text" id="subcat' . $row['Id'] . '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' . $row['subcategories'] . '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savesubcategory(' . $row['Id'] . ')" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button>';
         } else {
-            $subcategorieshtml = "";
-            $subcategories = explode(',',$row['subcategories']);
-            foreach($subcategories as $subcategory) {
-                $subcategorieshtml .= '<a href="#" class="categorieslink">' . $subcategory . '</a>&nbsp;';
+            if(($row['subcategories']!="") && (!is_null($row['subcategories']))) {
+                $subcategorieshtml = "";
+                $subcategories = explode(',',$row['subcategories']);
+                foreach($subcategories as $subcategory) {
+                    $subcategorieshtml .= '<a href="#" class="categorieslink">' . $subcategory . '</a>&nbsp;';
+                }
+                $categories .= '<h7>' . $subcategorieshtml . '</h7>';
             }
-            $categories .= '<h7>' . $subcategorieshtml . '</h7>';
         }
         $categories .= '</div></span>';
     }
