@@ -381,7 +381,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
+    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<input type="text" placeholder="類別" value="" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><input type="text" placeholder="子類別" value="" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"></span><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
         <button id="productimg0" class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
@@ -391,7 +391,7 @@ if(($result) && ($result->num_rows!==0)) {
                 <button id="productimg3" <?php echo $producttitle; ?> onclick="openproductimgmanager()" class="col-md-12 mosubproducts grow-sm" style="background:url(<?php if(isset($imageurls[2])) { echo $imageurls[2]; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;border:none"></button>
             </div>
         </div>
-        <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px">
+        <div class="col-md-6 align-self-center" style="padding-left:0px;padding-right:40px;margin-top:20px">
             <div class="row">
                 <h4><span style="font-size:20px;color:#28a745;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>&nbsp;<?php if($permissiontoedit==1) { echo "<input id='moproductname' type='text' placeholder='商品名稱' value='" . $productname . "' required>"; } else { echo $productname; }?></h4>
             </div>
