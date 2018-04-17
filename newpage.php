@@ -210,6 +210,17 @@ if($loggedin==1) {
         } else {
             $output = "failed";
         }
+    } else if(isset($_POST['getsubcategorycontent']) && isset($_POST['categoryid'])) {
+        $query = "select subcategories from mocategories where TrashedDate is null and Id=" . $_POST['categoryid'];
+        $result = $mysqli->query($query);
+        $output = "<option value='' disabled selected>子類別</option>";
+        if(($result) && ($result->num_rows!==0)) {
+            $row=$result->fetch_assoc();
+            $temparray = explode(",",$row['subcategories']);
+            foreach($temparray as $subcategory) {
+                $output .= "<option value='" . $subcategory . "'>" . $subcategory . "</option>";
+            }
+        }
     } else {
         $output = "failed";
     }

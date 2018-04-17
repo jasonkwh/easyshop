@@ -11,6 +11,8 @@ $descriptions = "此處為商品介紹 (限300英文字)";
 $productinfo = "";
 $producttitle = '';
 $price = "";
+$categoryid = 0;
+$subcategory = "";
 if(($result) && ($result->num_rows!==0)) {
     $row=$result->fetch_assoc();
     $merchantid = $row['MerchantId'];
@@ -18,6 +20,12 @@ if(($result) && ($result->num_rows!==0)) {
     $descriptions = $row['Descriptions'];
     $price = $row['Price'];
     $productinfo = $row['ProductInfo'];
+    if(!is_null($row['CategoryId'])) {
+        $categoryid = $row['CategoryId'];
+    }
+    if(!is_null($row['SubCategory'])) {
+        $subcategory = $row['SubCategory'];
+    }
 }
 if($_SESSION['mousertype']==1) {
     $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
@@ -28,6 +36,48 @@ if($_SESSION['mousertype']==1) {
             $permissiontoedit = 1;
             $producttitle = 'data-toggle="tooltip" data-placement="bottom" data-original-title="點擊管理商品圖片"';
         }
+    }
+}
+$categoryoptions = '';
+$subcategoryoptions = '';
+$query="select Id,Name,subcategories from mocategories where TrashedDate is null";
+$result = $mysqli->query($query);
+if(($result) && ($result->num_rows!==0)) {
+    if($permissiontoedit==1) {
+        $categoryoptions .= '<option value="-1" disabled';
+        if($categoryid==0) {
+            $categoryoptions .= ' selected';
+        }
+        $categoryoptions .= '>類別</option>';
+        $subcategoryoptions .= '<option value="" disabled';
+        if($subcategory=="") {
+            $subcategoryoptions .= ' selected';
+        }
+        $subcategoryoptions .= '>子類別</option>';
+        while($row=$result->fetch_assoc()) {
+            $categoryoptions .= '<option value="' . $row['Id'] . '"';
+            if($categoryid==$row['Id']) {
+                $categoryoptions .= ' selected';
+                if((!is_null($row['subcategories'])) && ($row['subcategories']!="")) {
+                    $temparray = explode(",",$row['subcategories']);
+                    foreach($temparray as $subcategoryrow) {
+                        $subcategoryoptions .= '<option value="' . $subcategoryrow . '"';
+                        if($subcategoryrow == $subcategory) {
+                            $subcategoryoptions .= ' selected';
+                        }
+                        $subcategoryoptions .= '>' . $subcategoryrow . '</option>';
+                    }
+                }
+            }
+            $categoryoptions .= '>' . $row['Name'] . '</option>';
+        }
+    } else {
+        while($row=$result->fetch_assoc()) {
+            if($categoryid==$row['Id']) {
+                $categoryoptions = $row['Name'];
+            }
+        }
+        $subcategoryoptions = $subcategory;
     }
 }
 ?>
@@ -381,7 +431,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<input type="text" placeholder="類別" value="" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><input type="text" placeholder="子類別" value="" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"></span><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
+    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><?php if($permissiontoedit==1) { ?><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<select style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $categoryoptions; ?></select><select style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $subcategoryoptions; ?></select></span><?php } else { ?><span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;margin-right:8px;border-radius:5px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<?php echo $categoryoptions; ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:5px"><?php echo $subcategoryoptions; ?></span></span><?php } ?><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
         <button id="productimg0" class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
