@@ -48,12 +48,12 @@ if(($result) && ($result->num_rows!==0)) {
         if($categoryid==0) {
             $categoryoptions .= ' selected';
         }
-        $categoryoptions .= '>類別</option>';
-        $subcategoryoptions .= '<option value="" disabled';
+        $categoryoptions .= '>(類別)</option>';
+        $subcategoryoptions .= '<option value=""';
         if($subcategory=="") {
             $subcategoryoptions .= ' selected';
         }
-        $subcategoryoptions .= '>子類別</option>';
+        $subcategoryoptions .= '>(子類別)</option>';
         while($row=$result->fetch_assoc()) {
             $categoryoptions .= '<option value="' . $row['Id'] . '"';
             if($categoryid==$row['Id']) {
@@ -349,17 +349,35 @@ if(($result) && ($result->num_rows!==0)) {
         function savecontents() {
             tovalidcurrency();
             replacenonnumbers();
+            var productcategory = 0;
+            if($('#categoryid').val()!=null) {
+                productcategory = $('#categoryid').val();
+            }
+            var productsubcategory = "";
+            if($('#subcategorycontent').val()!=null) {
+                productsubcategory = $('#subcategorycontent').val();
+            }
             $.post('saveproduct.php', {
                 productid: <?php echo $_REQUEST['id']; ?>,
                 productname: $('#moproductname').val(),
                 productshortdesc: $('#shortdescedit').val(),
                 productprice: $('#pricechanger').val(),
-                productlongdesc: tinyMCE.activeEditor.getContent()
+                productlongdesc: tinyMCE.activeEditor.getContent(),
+                productcategory: productcategory,
+                productsubcategory: productsubcategory
             }).done(function(data) {
-                console.log(data)
                 if (data === "success") {
                     successlogindialog("檔案已儲存!")
                 }
+            });
+        }
+
+        function changecategory() {
+            $.post('newpage.php', {
+                getsubcategorycontent: 1,
+                categoryid: $('#categoryid').val()
+            }).done(function(data) {
+                $('#subcategorycontent').html(data)
             });
         }
         <?php } ?>
@@ -431,7 +449,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><?php if($permissiontoedit==1) { ?><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<select style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $categoryoptions; ?></select><select style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $subcategoryoptions; ?></select></span><?php } else { ?><span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;margin-right:8px;border-radius:5px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<?php echo $categoryoptions; ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:5px"><?php echo $subcategoryoptions; ?></span></span><?php } ?><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
+    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><?php if($permissiontoedit==1) { ?><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<select id="categoryid" onchange="changecategory()" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $categoryoptions; ?></select><select id="subcategorycontent" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $subcategoryoptions; ?></select></span><?php } else { ?><span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;margin-right:8px;border-radius:5px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<?php echo $categoryoptions; if($subcategoryoptions!="") { ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:5px"><?php echo $subcategoryoptions; ?></span><?php } ?></span><?php } ?><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
         <button id="productimg0" class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">
