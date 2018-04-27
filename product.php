@@ -80,6 +80,28 @@ if(($result) && ($result->num_rows!==0)) {
         $subcategoryoptions = $subcategory;
     }
 }
+$categories = "";
+$tempcategoryname = "";
+$count = 0;
+$query = "select distinct moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $merchantid . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
+$result = $mysqli->query($query);
+if(($result) && ($result->num_rows!==0)) {
+    while($row=$result->fetch_assoc()) {
+        if($tempcategoryname!=$row['Name']) {
+            if($count!=0) {
+                $categories .= '</h7></div></span>';
+            }
+            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
+            $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px"><h7>';
+        }
+        if(($row['SubCategory']!="") && (!is_null($row['SubCategory']))) {
+            $categories .= '<a href="#" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
+        }
+        $tempcategoryname = $row['Name'];
+        $count++;
+    }
+    $categories .= '</h7></div></span>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hant">
@@ -440,7 +462,7 @@ if(($result) && ($result->num_rows!==0)) {
             <div id="categorycard" class="card" style="border-style:none">
                 <p class="card-header" style="height:40px;background-color:#218838;color:#fff;font-size:13px;border-style:none"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;全部商品分類</p>
                 <div id="categorybody" class="card-body" style="background-color:#28a745;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;font-size:13px;display:none">
-                    <?php if($_SESSION['mousertype']==2) { ?><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong><?php } ?>
+                    <?php echo $categories; ?>
                 </div>
             </div>
         </div>
@@ -537,7 +559,7 @@ if(($result) && ($result->num_rows!==0)) {
                 </button>
             </div>
             <div class="modal-body" style="background-color:#28a745;border-bottom-left-radius:3px">
-                <?php if($_SESSION['mousertype']==2) { ?><strong><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;新增類別</strong><?php } ?>
+                <?php echo $categories; ?>
             </div>
         </div>
     </div>
