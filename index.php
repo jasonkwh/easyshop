@@ -172,6 +172,7 @@ if(($result) && ($result->num_rows!==0)) {
 </div>
 <div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" style="display:none"></div>
+<div id="merchantcontainer2" style="display:none"></div>
 <div id="indexcontainer" class="container">
     <div class="row">
         <div class="col-12 col-md-6" style="margin-bottom:15px">

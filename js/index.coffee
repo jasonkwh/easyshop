@@ -14,6 +14,7 @@ $ ->
     $('#largescreen').hide()
     $('#merchantcontainer').css "top",200
     $('#merchantlogo').addClass 'justify-content-center'
+  $('#merchantcontainer2').css "top",150
   $('#productcontainer').css "top",150
   $('.moproducts').css 'height', $('.moproducts').outerWidth()
   $('.mosubproducts').css 'height', $('.moproducts').outerWidth()/3
