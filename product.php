@@ -83,7 +83,7 @@ if(($result) && ($result->num_rows!==0)) {
 $categories = "";
 $tempcategoryname = "";
 $count = 0;
-$query = "select distinct moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $merchantid . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
+$query = "select distinct moc.Id,moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $merchantid . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
@@ -91,11 +91,11 @@ if(($result) && ($result->num_rows!==0)) {
             if($count!=0) {
                 $categories .= '</h7></div></span>';
             }
-            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
+            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="category_mer.php?id=' . $merchantid . '&categoryid=' . $row['Id'] . '" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
             $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px"><h7>';
         }
         if(($row['SubCategory']!="") && (!is_null($row['SubCategory']))) {
-            $categories .= '<a href="#" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
+            $categories .= '<a href="category_mer.php?id=' . $merchantid . '&categoryid=' . $row['Id'] . '&subcategory=' . $row['SubCategory'] . '" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
         }
         $tempcategoryname = $row['Name'];
         $count++;
@@ -471,7 +471,7 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="photogallery" style="display:none"></div>
 <?php if($permissiontoedit==1) { ?><button id="merchantbgimgbtn" type="button" onclick="openbgimgmanager()" class="btn btn-lg btn-success rounded-circle" style="position:absolute;weight:50px;height:50px;right:50px;top:120px;" onclick=""><i class="fa fa-wrench" aria-hidden="true"></i></button><?php } ?>
 <div id="productcontainer" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><?php if($permissiontoedit==1) { ?><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<select id="categoryid" onchange="changecategory()" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $categoryoptions; ?></select><select id="subcategorycontent" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $subcategoryoptions; ?></select></span><?php } else { ?><span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;margin-right:8px;border-radius:30px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<?php echo $categoryoptions; if($subcategoryoptions!="") { ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:30px"><?php echo $subcategoryoptions; ?></span><?php } ?></span><?php } ?><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
+    <span style="float:right;cursor:pointer;z-index:3;right:15px;top:10px;position:absolute;font-size:14px;"><?php if($permissiontoedit==1) { ?><span style="color:#28a745"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<select id="categoryid" onchange="changecategory()" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $categoryoptions; ?></select><select id="subcategorycontent" style="width:90px;margin-right:8px;border:1.3px solid #30a64a;border-radius:30px;padding-left:8px"><?php echo $subcategoryoptions; ?></select></span><?php } else { ?><span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;margin-right:8px;border-radius:30px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<a class="categorieslink" href="category_mer.php?id=<?php echo $merchantid; ?>&categoryid=<?php echo $categoryid; ?>"><?php echo $categoryoptions; ?></a><?php if($subcategoryoptions!="") { ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:30px"><a class="categorieslinkre" href="category_mer.php?id=<?php echo $merchantid; ?>&categoryid=<?php echo $categoryid; ?>&subcategory=<?php echo $subcategoryoptions; ?>"><?php echo $subcategoryoptions; ?></a></span><?php } ?></span><?php } ?><a href="#" onclick="goBack()" style="color:#28a745"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;返回</a><?php if($permissiontoedit==1) { ?>&nbsp;&nbsp;&nbsp;<a href="#" onclick="savecontents()" style="color:#28a745"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;儲存修改</a><?php } ?></span>
     <div class="row" style="border-radius:5px;background-color:#fff;margin-bottom:15px">
         <button id="productimg0" class="col-md-4 moproducts grow" <?php echo $producttitle; ?> onclick="openproductimgmanager()" style="background:url(<?php if($mainimageurl!="") { echo $mainimageurl; } else { echo "/img/emptyimage.jpg"; } ?>);background-repeat:no-repeat;background-size:cover;max-width:380px;max-height:380px;width:auto;height:auto;border-top-left-radius:5px;border-bottom-left-radius:5px;border:none"></button>
         <div class="col-md-2">

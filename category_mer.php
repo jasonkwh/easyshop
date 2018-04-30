@@ -14,22 +14,31 @@ if($_SESSION['mousertype']==1) {
     }
 }
 
+$categoryid = $_REQUEST['categoryid'];
+$curcategory = "";
+$cursubcategory = "";
+if(isset($_REQUEST['subcategory'])) {
+    $cursubcategory = $_REQUEST['subcategory'];
+}
 $categories = "";
 $tempcategoryname = "";
 $count = 0;
-$query = "select distinct moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $_REQUEST['id'] . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
+$query = "select distinct moc.Id,moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $_REQUEST['id'] . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
+        if($row['Id']=$categoryid) {
+            $curcategory = $row['Name'];
+        }
         if($tempcategoryname!=$row['Name']) {
             if($count!=0) {
                 $categories .= '</h7></div></span>';
             }
-            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
+            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
             $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px"><h7>';
         }
         if(($row['SubCategory']!="") && (!is_null($row['SubCategory']))) {
-            $categories .= '<a href="#" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
+            $categories .= '<a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '&subcategory=' . $row['SubCategory'] . '" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
         }
         $tempcategoryname = $row['Name'];
         $count++;
@@ -229,12 +238,8 @@ if(($result) && ($result->num_rows!==0)) {
         <div class="col-12 col-md-12" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
                 <div class="row" style="margin-bottom:15px">
-                    <div class="col-6" style="margin-bottom:5px">
-                        <ul class="nav nav-pills text-success">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="/"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;商品分類</a>
-                            </li>
-                        </ul>
+                    <div class="col-6" style="margin-top:5px;margin-left:5px;margin-right:-5px">
+                        <span style="color:#fff;background-color:#28a745;padding:8px 10px 8px 10px;border-radius:30px"><i class="fa fa-list" aria-hidden="true" style="margin-right:4px"></i>&nbsp;<a class="categorieslink" href="category_mer.php?id=<?php echo $_REQUEST['id']; ?>&categoryid=<?php echo $categoryid; ?>"><?php echo $curcategory; ?></a><?php if($cursubcategory!="") { ?><span style="background-color:#fff;color:#28a745;padding:4px 6px 4px 6px;margin-left:4px;margin-right:-4px;border-radius:30px"><a class="categorieslinkre" href="category_mer.php?id=<?php echo $_REQUEST['id']; ?>&categoryid=<?php echo $categoryid; ?>&subcategory=<?php echo $cursubcategory; ?>"><?php echo $cursubcategory; ?></a></span><?php } ?></span>
                     </div>
                     <div class="col-6" style="margin-bottom:5px">
                         <div class="input-group" style="margin-bottom:10px;width:200px;float:right"><input id="searchnewproducts" placeholder="搜索商品" class="form-control input-login" aria-label="搜索商品" onkeyup="searchnewproduct()" type="text"><span class="input-group-addon input-login-addon"><i class="fa fa-search" aria-hidden="true"></i></span></div>
@@ -254,7 +259,11 @@ if(($result) && ($result->num_rows!==0)) {
                                     $imgarray[$row['Id']] = $row['FileUrl'];
                                 }
                             }
-                            $query = "select * from moproducts where MerchantId=" . $_REQUEST['id'] . " and Edited=1 order by CreatedDate asc limit 48";
+                            if($cursubcategory!="") {
+                                $query = "select * from moproducts where MerchantId=" . $_REQUEST['id'] . " and Edited=1 and CategoryId=" . $categoryid . " and SubCategory='" . $mysqli->real_escape_string(trim($cursubcategory)). "' order by CreatedDate asc limit 48";
+                            } else {
+                                $query = "select * from moproducts where MerchantId=" . $_REQUEST['id'] . " and Edited=1 and CategoryId=" . $categoryid . " order by CreatedDate asc limit 48";
+                            }
                             $result = $mysqli->query($query);
                             if(($result) && ($result->num_rows!==0)) {
                                 $count=0;

@@ -17,7 +17,7 @@ if($_SESSION['mousertype']==1) {
 $categories = "";
 $tempcategoryname = "";
 $count = 0;
-$query = "select distinct moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $_REQUEST['id'] . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
+$query = "select distinct moc.Id,moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $_REQUEST['id'] . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
@@ -25,11 +25,11 @@ if(($result) && ($result->num_rows!==0)) {
             if($count!=0) {
                 $categories .= '</h7></div></span>';
             }
-            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
+            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
             $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px"><h7>';
         }
         if(($row['SubCategory']!="") && (!is_null($row['SubCategory']))) {
-            $categories .= '<a href="#" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
+            $categories .= '<a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '&subcategory=' . $row['SubCategory'] . '" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
         }
         $tempcategoryname = $row['Name'];
         $count++;

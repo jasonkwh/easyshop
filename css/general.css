@@ -125,5 +125,7 @@ body {
 .pagination > li > a, .pagination > li > span{color:#28a745!important;}
 .pagination > li.disabled > a, .pagination > li.disabled > span{color:#868e96!important;}
 .pagination > li.active > a, .pagination > li.active > span{color:#fff!important;background-color:#28a745!important;border-color:#28a745!important;}
-.categorieslink { color:#fff;text-decoration:none;background-color:#30a64a }
-.categorieslink:hover { color:#30a64a;text-decoration:none;background-color:#fff }
+.categorieslink { color:#fff;text-decoration:none; }
+.categorieslink:hover { cursor:pointer;color:#fff;text-decoration:none; }
+.categorieslinkre { color:#28a745;text-decoration:none; }
+.categorieslinkre:hover { cursor:pointer;color:#28a745;text-decoration:none; }
