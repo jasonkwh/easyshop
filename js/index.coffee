@@ -79,7 +79,7 @@ $ ->
               '//'
               location.host
               location.pathname
-            ].join('') + '?id=' + getquerystringid() + '&logout=success'
+            ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory') + '&logout=success'
             return
           ), 500
           do waitingdialog
@@ -207,7 +207,7 @@ $ ->
                       '//'
                       location.host
                       location.pathname
-                    ].join('') + '?id=' + getquerystringid() + '&login=success'
+                    ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory') + '&login=success'
                     return
                   ), 500
                   do waitingdialog
@@ -318,7 +318,7 @@ newpagedialog = ->
                     '//'
                     location.host
                     location.pathname
-                  ].join('') + '?id=' + getquerystringid() + '&pageadded=' + data
+                  ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory') + '&pageadded=' + data
                   return
                 ), 500
                 do waitingdialog
@@ -353,7 +353,7 @@ getParameterByName = (name, url) ->
             '//'
             location.host
             location.pathname
-          ].join('') + '?id=' + getquerystringid()
+          ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory')
           return
         ), 500
         do waitingdialog
@@ -372,7 +372,7 @@ getParameterByName = (name, url) ->
             '//'
             location.host
             location.pathname
-          ].join('') + '?id=' + getquerystringid()
+          ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory')
           return
         ), 500
         do waitingdialog
@@ -445,7 +445,7 @@ getParameterByName = (name, url) ->
                     '//'
                     location.host
                     location.pathname
-                  ].join('') + '?id=' + getquerystringid() + '&pagedelete=success'
+                  ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory') + '&pagedelete=success'
                   return
                 ), 500
                 do waitingdialog
@@ -518,7 +518,7 @@ getParameterByName = (name, url) ->
                 '//'
                 location.host
                 location.pathname
-              ].join('') + '?id=' + getquerystringid()
+              ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory')
               return
             ), 500
           do waitingdialog
@@ -540,7 +540,7 @@ getParameterByName = (name, url) ->
               '//'
               location.host
               location.pathname
-            ].join('') + '?id=' + getquerystringid()
+            ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory')
             return
           ), 500
           do waitingdialog
@@ -597,7 +597,7 @@ getParameterByName = (name, url) ->
                     '//'
                     location.host
                     location.pathname
-                  ].join('') + '?id=' + getquerystringid()
+                  ].join('') + '?id=' + getquerystring('id') + '&categoryid=' + getquerystring('categoryid') + '&subcategory=' + getquerystring('subcategory')
                   return
                 ), 500
                 do waitingdialog
@@ -610,13 +610,12 @@ getParameterByName = (name, url) ->
         action:->
   return
 
-getquerystringid = ->
-  final_id = 0
+
+@getquerystring = (qstring) ->
+  returnvalue = ""
   url = document.URL
-  id_check = /[?&]id=([^&]+)/i
-  match = id_check.exec(url)
+  patt = new RegExp('[?&]'+ qstring + '=([^&#]+)', 'i')
+  match = patt.exec(url)
   if match != null
-    final_id = parseInt(match[1])
-  else
-    final_id = 0
-  return final_id
+    returnvalue = match[1]
+  return returnvalue

@@ -3,15 +3,8 @@ require_once('userstatus.php');
 $_SESSION['mocurrenturl'] = strtok((isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",'?');
 $_SESSION['mopageid'] = $_REQUEST['id'];
 $permissiontoedit = 0;
-if($_SESSION['mousertype']==1) {
-    $query = "select MerchantId from mousers where Id=" . $_SESSION['mouserid'];
-    $result = $mysqli->query($query);
-    if(($result) && ($result->num_rows!==0)) {
-        $row = $result->fetch_assoc();
-        if((int)$row['MerchantId']==(int)$_REQUEST['id']) {
-            $permissiontoedit = 1;
-        }
-    }
+if($_SESSION['mousertype']==2) {
+    $permissiontoedit = 1;
 }
 
 $categoryid = $_REQUEST['categoryid'];
@@ -20,30 +13,36 @@ $cursubcategory = "";
 if(isset($_REQUEST['subcategory'])) {
     $cursubcategory = $_REQUEST['subcategory'];
 }
+
 $categories = "";
-$tempcategoryname = "";
-$count = 0;
-$query = "select distinct moc.Id,moc.Name,mop.SubCategory from moproducts mop inner join mocategories moc on mop.CategoryId=moc.Id and mop.MerchantId=" . $_REQUEST['id'] . " and mop.TrashedDate is null and moc.TrashedDate is null and mop.Edited=1 order by moc.Name,mop.SubCategory";
+$subcategories = array();
+$subcategorieshtml = "";
+$query = "select * from mocategories where TrashedDate is null order by Name asc";
 $result = $mysqli->query($query);
 if(($result) && ($result->num_rows!==0)) {
     while($row=$result->fetch_assoc()) {
-        if($row['Id']=$categoryid) {
+        if($categoryid==$row['Id']) {
             $curcategory = $row['Name'];
         }
-        if($tempcategoryname!=$row['Name']) {
-            if($count!=0) {
-                $categories .= '</h7></div></span>';
+        $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="#" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
+        if($permissiontoedit==1) {
+            $categories .= '<button type="button" class="btn btn-sm btn-success rounded-circle" onclick="editcategory(' . $row['Id'] . ',\'' . $row['Name'] . '\',$(this))" style="margin-left:5px;margin-top:-7px;width:30px;height:30px;background-color:#ffc800!important"><i class="fa fa-pencil" aria-hidden="true"></i></button><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="trashcategory(' . $row['Id'] . ')" style="margin-left:3px;margin-top:-7px;width:30px;height:30px;background-color:#da3849!important"><i class="fa fa-times" aria-hidden="true"></i></button>';
+        }
+        $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px">';
+        if($permissiontoedit==1) {
+            $categories .= '<input style="width:160px" type="text" id="subcat' . $row['Id'] . '" class="editsubcategoryfield" placeholder="輸入子類別 (用逗號分隔)" value="' . $row['subcategories'] . '"><button type="button" class="btn btn-sm btn-success rounded-circle" onclick="savesubcategory(' . $row['Id'] . ')" style="margin-left:5px;width:30px;height:30px;background-color:#28873c!important"><i class="fa fa-check" aria-hidden="true"></i></button>';
+        } else {
+            if(($row['subcategories']!="") && (!is_null($row['subcategories']))) {
+                $subcategorieshtml = "";
+                $subcategories = explode(',',$row['subcategories']);
+                foreach($subcategories as $subcategory) {
+                    $subcategorieshtml .= '<a href="#" class="categorieslink">' . $subcategory . '</a>&nbsp;';
+                }
+                $categories .= '<h7>' . $subcategorieshtml . '</h7>';
             }
-            $categories .= '<span><div class="row" style="margin-left:0;margin-bottom:2px"><strong><h6><a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '" class="categorieslink">' . $row['Name'] . '</a></h6></strong>';
-            $categories .= '</div><div class="row" style="margin-left:0;margin-bottom:20px"><h7>';
         }
-        if(($row['SubCategory']!="") && (!is_null($row['SubCategory']))) {
-            $categories .= '<a href="category_mer.php?id=' . $_REQUEST['id'] . '&categoryid=' . $row['Id'] . '&subcategory=' . $row['SubCategory'] . '" class="categorieslink">' . $row['SubCategory'] . '</a>&nbsp;';
-        }
-        $tempcategoryname = $row['Name'];
-        $count++;
+        $categories .= '</div></span>';
     }
-    $categories .= '</h7></div></span>';
 }
 ?>
 <!DOCTYPE html>
@@ -139,23 +138,6 @@ if(($result) && ($result->num_rows!==0)) {
         function searchnewproduct() {
             $('#latestproducttable').dataTable().fnFilter($("#searchnewproducts").val());
         }
-
-        function selectthis(e) {
-            var selecteditem = e.attr('id').split('_')[1];
-            $.post('newpage.php', {
-                selectmerchantbgimg: 1,
-                bgimgid: selecteditem,
-                merchantid: <?php echo $_REQUEST['id']; ?>
-            }).done(function(data) {
-                if (data === "success") {
-                    $('.mobgimghref img').removeClass('mobgimgselected');
-                    $('#'+e.attr('id') + ' img').addClass('mobgimgselected');
-                    loadmerbgimg(<?php echo $_REQUEST['id']; ?>);
-                } else {
-                    errordialog('選擇圖片失敗');
-                }
-            });
-        }
     </script>
 </head>
 <body style="height:100%;<?php
@@ -212,11 +194,6 @@ if(($result) && ($result->num_rows!==0)) {
 <div id="productcontainer" style="display:none"></div>
 <div id="merchantcontainer" style="display:none"></div>
 <div id="merchantcontainer2" class="container" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;">
-    <div id="merchantlogo" class="row">
-        <div class="col-4 col-md-2">
-            <img src="<?php echo $logourl; ?>" style="width:100%;margin-bottom:20px">
-        </div>
-    </div>
     <div class="row">
         <div class="col-12 col-md-12" style="margin-bottom:15px">
             <div style="background-color:#fff;height:100%;border-radius:5px;padding:8px 8px 14px 8px">
